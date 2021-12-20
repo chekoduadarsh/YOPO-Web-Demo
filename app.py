@@ -19,8 +19,7 @@ server = Flask(__name__)
 
 
 # Flask-WTF requires an encryption key - the string can be anything
-server.config['SECRET_KEY'] = ''.join(random.choices(string.ascii_uppercase +
-                             string.digits, k = 15))
+server.config['SECRET_KEY'] = 'C2HWGVoMGfNTBsrYQg8EcMrdTimkZfAb'
 
 # Flask-Bootstrap requires this line
 Bootstrap(server)
@@ -55,12 +54,14 @@ def index():
 
         form.name.data = ""
         # redirect the browser to another route and template
+        print(messages)
         global server
 
         with server.test_request_context('/dashboard/'):
             server = dashboard(server, messages, dash_app)
+        print(url_for('/dashboard/' , id = messages))
         return redirect( url_for('/dashboard/' , id = messages))
-    return render_template('index.html', form=form, message=message)
+    return render_template('index.html',  form=form, message=message)
 
 
 if __name__ == '__main__':  

@@ -14,7 +14,7 @@ html_layout = """
             <header>
               <div class="nav-wrapper">
                 <a href="/">
-                    <h1>Plotly Dash Flask Tutorial</h1>
+                    <h1>CSV Visualizer</h1>
                   </a>
                 <nav>
                 </nav>

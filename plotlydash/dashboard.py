@@ -33,15 +33,19 @@ def dashboard(server,  messages,dash_app):
 
     fig = px.scatter_matrix(df)
     # Create Layout
-    dash_app.layout = html.Div(
-        children=[dcc.Graph(
-            id='histogram-graph',
-            figure=fig),
-            create_data_table(df)
-        ],
-        id='dash-container'
-    )
+    dash_app.layout = html.Div([
+    dcc.Tabs(id="tabs-example-graph", value='tab-1-example-graph', children=[
+        dcc.Tab(label='Tab One', value='tab-1-example-graph', children = [dcc.Graph(
+                id='graph-1-tabs',
+                figure=fig
+            )]),
+        dcc.Tab(label='Tab Two', value='tab-2-example-graph' , children = [create_data_table(df)]),
+    ]),
+    html.Div(id='tabs-content-example-graph')
+    ])  
+
     return dash_app.server
+
 
 
 def create_data_table(df):
