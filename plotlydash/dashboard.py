@@ -7,6 +7,7 @@ import dash_html_components as html
 import dash_core_components as dcc
 from .data import create_dataframe
 from .layout import html_layout
+import plotly.express as px
 import json 
 
 import string
@@ -25,30 +26,17 @@ def dashboard(server,  messages,dash_app):
 
     
     with server.test_request_context('/dashboard/'):
-        print("WHYYY  "+str(messages))
-        print("WHYYY  "+str(type(messages)))
     df = create_dataframe(json.loads(messages)["dataFrame"], server)
 
     # Custom HTML layout
     dash_app.index_string = html_layout
 
+    fig = px.scatter_matrix(df)
     # Create Layout
     dash_app.layout = html.Div(
         children=[dcc.Graph(
             id='histogram-graph',
-            figure={
-                'data': [{
-                    'x': df['Age'],
-                    'text': df['Age'],
-                    'name': '311 Calls by region.',
-                    'type': 'histogram'
-                }],
-                'layout': {
-                    'title': 'NYC 311 Calls category.',
-                    'height': 500,
-                    'padding': 150
-                }
-            }),
+            figure=fig),
             create_data_table(df)
         ],
         id='dash-container'
