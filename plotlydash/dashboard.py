@@ -13,8 +13,6 @@ import json
 import string
 import random
   
-# initializing size of string 
-N = 7
 from flask import Flask, render_template, redirect, url_for, session, request
 import urllib.parse
 import flask
@@ -39,7 +37,7 @@ def dashboard(server,  messages,dash_app):
                 id='graph-1-tabs',
                 figure=fig
             )]),
-        dcc.Tab(label='Tab Two', value='tab-2-example-graph' , children = [create_data_table(df)]),
+        dcc.Tab(label='DataFrame View', value='tab-2-example-graph' , children = [create_data_table(df)]),
     ]),
     html.Div(id='tabs-content-example-graph')
     ])  
