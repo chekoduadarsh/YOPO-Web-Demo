@@ -26,7 +26,7 @@ def dashboard(server,  messages,dash_app):
 
     
     with server.test_request_context('/dashboard/'):
-    df = create_dataframe(json.loads(messages)["dataFrame"], server)
+       df = create_dataframe(json.loads(messages)["dataFrame"], server)
 
     # Custom HTML layout
     dash_app.index_string = html_layout
