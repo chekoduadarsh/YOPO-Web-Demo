@@ -10,6 +10,7 @@ from .layout import html_layout
 import plotly.express as px
 import json 
 
+from dash.dependencies import Input, Output, State
 import string
 import random
   
@@ -29,20 +30,81 @@ def dashboard(server,  messages,dash_app):
     # Custom HTML layout
     dash_app.index_string = html_layout
 
-    fig = px.scatter_matrix(df)
     # Create Layout
     dash_app.layout = html.Div([
-    dcc.Tabs(id="tabs-example-graph", value='tab-1-example-graph', children=[
-        dcc.Tab(label='Tab One', value='tab-1-example-graph', children = [dcc.Graph(
-                id='graph-1-tabs',
-                figure=fig
-            )]),
-        dcc.Tab(label='DataFrame View', value='tab-2-example-graph' , children = [create_data_table(df)]),
+    dcc.Tabs(id="tabs", value='tab-1', children=[
+
+        dcc.Tab(label='DataFrame View', value='tab-1' , children = [    
+            create_data_table(df)]
+        
+        ),
+        dcc.Tab(label='ScatterPlot', value='tab-2', children = [
+            
+            dcc.Input(id='input-x-scatter', type='text', placeholder='Enter X axis Value'),
+            dcc.Input(id='input-y-scatter', type='text', placeholder='Enter Y axis Value'),
+            html.Button(id='submit-button-state', n_clicks=0, children='Submit'),
+
+            dcc.Input(id='input-color-scatter', type='text', placeholder='Enter Color axis Value'),
+            dcc.Input(id='input-size-scatter', type='text', placeholder='Enter Size axis Value'),
+            dcc.RadioItems(
+                id='scatter-type-radio',
+                options=[{'label': k, 'value': k} for k in ["Classic","Bubble"]],
+            ),
+            html.Div(id='output-state', children = []),
+            ]
+        ),
+
+        
     ]),
-    html.Div(id='tabs-content-example-graph')
+    html.Div(id='tabs-content')
     ])  
 
+
+    @dash_app.callback(Output('output-state', 'children'),
+              Input('submit-button-state', 'n_clicks'),
+              State('input-x-scatter', 'value'),
+              State('input-y-scatter', 'value'),
+              State('input-color-scatter', 'value'),
+              State('input-size-scatter', 'value'),
+              State('scatter-type-radio', 'value'))
+    def update_scatterplot(n_clicks, input1, input2, input3, input4, input5): 
+
+        fig = px.scatter_matrix(df)
+        if str(input1) in df.columns and str(input2) in df.columns:
+            if (input4 is None) and (input3 is None):
+                fig = px.scatter(df, x=str(input1), y=str(input2))
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+            if (input4 is None) and not(input3 is None):
+                fig = px.scatter(df, x=str(input1), y=str(input2), color=str(input3))
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )    
+
+            if not(input4 is None) and (input3 is None):
+                fig = px.scatter(df, x=str(input1), y=str(input2), size=str(input4))
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+            if not(input4 is None) and not(input3 is None):
+                fig = px.scatter(df, x=str(input1), y=str(input2), color=str(input3), size=str(input4))
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+
+        return  dcc.Graph(
+                id='graph-1-tabs',
+                figure=fig
+              ) 
+
     return dash_app.server
+
+
 
 
 
