@@ -27,6 +27,12 @@ def dashboard(server,  messages,dash_app):
     with server.test_request_context('/dashboard/'):
        df = create_dataframe(json.loads(messages)["dataFrame"], server)
 
+
+    dropdowns = []
+
+    for column in df.columns:
+        dropdowns.append({"label":column, "value":column})
+
     # Custom HTML layout
     dash_app.index_string = html_layout
 
@@ -40,16 +46,15 @@ def dashboard(server,  messages,dash_app):
         ),
         dcc.Tab(label='ScatterPlot', value='tab-2', children = [
 
-            html.Div( id='input-1', children = [          
-            dcc.Input(id='input-x-scatter', type='text', placeholder='Enter X axis Value'),
-            dcc.Input(id='input-y-scatter', type='text', placeholder='Enter Y axis Value'),
+            html.Div( id='input-1', children = [  
+            dcc.Dropdown(id='input-x-scatter', options=dropdowns, placeholder='Enter X axis Value'),
+            dcc.Dropdown(id='input-y-scatter', options=dropdowns, placeholder='Enter Y axis Value'),
                 ]
             ),
 
-            html.Div( id='input-2', children = [
-                    
-            dcc.Input(id='input-color-scatter', type='text', placeholder='Enter Color axis Value'),
-            dcc.Input(id='input-size-scatter', type='text', placeholder='Enter Size axis Value'),
+            html.Div( id='input-2', children = [                    
+            dcc.Dropdown(id='input-color-scatter', options=dropdowns, placeholder='Enter Color axis Value'),
+            dcc.Dropdown(id='input-size-scatter', options=dropdowns, placeholder='Enter Size axis Value'),
                 ]
             ),
            
