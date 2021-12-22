@@ -32,7 +32,7 @@ def dashboard(server,  messages,dash_app):
 
     for column in df.columns:
         dropdowns.append({"label":column, "value":column})
-
+    barmode = [{"label":"stack", "value":"stack"},{"label":"group", "value":"group"}]
     # Custom HTML layout
     dash_app.index_string = html_layout
 
@@ -41,29 +41,40 @@ def dashboard(server,  messages,dash_app):
     dcc.Tabs(id="tabs", value='tab-1', children=[
 
         dcc.Tab(label='DataFrame View', value='tab-1' , children = [    
-            create_data_table(df)]
-        
-        ),
+            create_data_table(df)
+        ]),
         dcc.Tab(label='ScatterPlot', value='tab-2', children = [
 
             html.Div( id='input-1', children = [  
             dcc.Dropdown(id='input-x-scatter', options=dropdowns, placeholder='Enter X axis Value'),
             dcc.Dropdown(id='input-y-scatter', options=dropdowns, placeholder='Enter Y axis Value'),
-                ]
-            ),
+            ]),
 
             html.Div( id='input-2', children = [                    
             dcc.Dropdown(id='input-color-scatter', options=dropdowns, placeholder='Enter Color axis Value'),
             dcc.Dropdown(id='input-size-scatter', options=dropdowns, placeholder='Enter Size axis Value'),
-                ]
-            ),
+            ]),
            
 
-            html.Button(id='submit-button-state', n_clicks=0, children='Submit'),
+            html.Button(id='submit-button-scatter', n_clicks=0, children='Submit'),
 
-            html.Div(id='output-state', children = []),
-            ]
-        ),
+            html.Div(id='output-state-scatter', children = []),
+        ]),
+        dcc.Tab(label='Bar Graph', value='tab-3' , children = [    
+            
+            html.Div( id='input-1', children = [  
+            dcc.Dropdown(id='input-x-bar', options=dropdowns, placeholder='Enter X axis Value'),
+            dcc.Dropdown(id='input-y-bar', options=dropdowns, placeholder='Enter Y axis Value'),
+            ]),
+            html.Div( id='input-2', children = [                    
+            dcc.Dropdown(id='input-color-bar', options=dropdowns, placeholder='Enter Color axis Value'),
+            dcc.Dropdown(id='input-barmode-bar', options=barmode, placeholder='Enter BarMode'),
+            ]),
+
+            html.Button(id='submit-button-bar', n_clicks=0, children='Submit'),
+
+            html.Div(id='output-state-bar', children = []),
+        ]),
 
         
     ]),
@@ -71,8 +82,8 @@ def dashboard(server,  messages,dash_app):
     ])  
 
 
-    @dash_app.callback(Output('output-state', 'children'),
-              Input('submit-button-state', 'n_clicks'),
+    @dash_app.callback(Output('output-state-scatter', 'children'),
+              Input('submit-button-scatter', 'n_clicks'),
               State('input-x-scatter', 'value'),
               State('input-y-scatter', 'value'),
               State('input-color-scatter', 'value'),
@@ -111,11 +122,52 @@ def dashboard(server,  messages,dash_app):
                 figure=fig
               ) 
 
+
+    @dash_app.callback(Output('output-state-bar', 'children'),  
+              Input('submit-button-bar', 'n_clicks'),
+              State('input-x-bar', 'value'),
+              State('input-y-bar', 'value'),
+              State('input-color-bar', 'value'),
+              State('input-barmode-bar', 'value'))
+    def update_barplot(n_clicks, input1, input2, input3, input4): 
+        fig = px.scatter_matrix(df)
+        if str(input1) in df.columns and str(input2) in df.columns:
+            if (input4 is None) and (input3 is None):
+                fig = px.bar(df, x=str(input1), y=str(input2))
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+            if (input4 is None) and not(input3 is None):
+                fig = px.bar(df, x=str(input1), y=str(input2), color=str(input3))
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )    
+
+            if not(input4 is None) and (input3 is None):
+                fig = px.bar(df, x=str(input1), y=str(input2), barmode=str(input4))
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+            if not(input4 is None) and not(input3 is None):
+                fig = px.bar(df, x=str(input1), y=str(input2), color=str(input3), barmode=str(input4))
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+
+        return  dcc.Graph(
+                id='graph-1-tabs',
+                figure=fig
+              )
+
     return dash_app.server
 
 
 
-
+   
 
 def create_data_table(df):
     """Create Dash datatable from Pandas DataFrame."""
