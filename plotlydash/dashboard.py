@@ -78,10 +78,6 @@ def dashboard(server,  messages,dash_app):
               State('input-color-scatter', 'value'),
               State('input-size-scatter', 'value'))
     def update_scatterplot(n_clicks, input1, input2, input3, input4): 
-        print("3 "+str(input3 is None))
-        print(input3)
-        print("4 "+str(input4 is None))
-        print(input4)
         fig = px.scatter_matrix(df)
         if str(input1) in df.columns and str(input2) in df.columns:
             if (input4 is None) and (input3 is None):
