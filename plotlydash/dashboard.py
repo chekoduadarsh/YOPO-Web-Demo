@@ -89,7 +89,6 @@ def dashboard(server,  messages,dash_app):
               State('input-color-scatter', 'value'),
               State('input-size-scatter', 'value'))
     def update_scatterplot(n_clicks, input1, input2, input3, input4): 
-        fig = px.scatter_matrix(df)
         if str(input1) in df.columns and str(input2) in df.columns:
             if (input4 is None) and (input3 is None):
                 fig = px.scatter(df, x=str(input1), y=str(input2))
@@ -117,10 +116,7 @@ def dashboard(server,  messages,dash_app):
                         figure=fig
                     )
 
-        return  dcc.Graph(
-                id='graph-1-tabs',
-                figure=fig
-              ) 
+        return  "Fill the required fields and click on 'Submit' to generate teh graph you want!!"
 
 
     @dash_app.callback(Output('output-state-bar', 'children'),  
@@ -130,7 +126,6 @@ def dashboard(server,  messages,dash_app):
               State('input-color-bar', 'value'),
               State('input-barmode-bar', 'value'))
     def update_barplot(n_clicks, input1, input2, input3, input4): 
-        fig = px.scatter_matrix(df)
         if str(input1) in df.columns and str(input2) in df.columns:
             if (input4 is None) and (input3 is None):
                 fig = px.bar(df, x=str(input1), y=str(input2))
@@ -158,10 +153,7 @@ def dashboard(server,  messages,dash_app):
                         figure=fig
                     )
 
-        return  dcc.Graph(
-                id='graph-1-tabs',
-                figure=fig
-              )
+        return  "Fill the required fields and click on 'Submit' to generate teh graph you want!!"
 
     return dash_app.server
 
