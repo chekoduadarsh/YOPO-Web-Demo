@@ -39,17 +39,23 @@ def dashboard(server,  messages,dash_app):
         
         ),
         dcc.Tab(label='ScatterPlot', value='tab-2', children = [
-            
+
+            html.Div( id='input-1', children = [          
             dcc.Input(id='input-x-scatter', type='text', placeholder='Enter X axis Value'),
             dcc.Input(id='input-y-scatter', type='text', placeholder='Enter Y axis Value'),
-            html.Button(id='submit-button-state', n_clicks=0, children='Submit'),
+                ]
+            ),
 
+            html.Div( id='input-2', children = [
+                    
             dcc.Input(id='input-color-scatter', type='text', placeholder='Enter Color axis Value'),
             dcc.Input(id='input-size-scatter', type='text', placeholder='Enter Size axis Value'),
-            dcc.RadioItems(
-                id='scatter-type-radio',
-                options=[{'label': k, 'value': k} for k in ["Classic","Bubble"]],
+                ]
             ),
+           
+
+            html.Button(id='submit-button-state', n_clicks=0, children='Submit'),
+
             html.Div(id='output-state', children = []),
             ]
         ),
@@ -65,10 +71,12 @@ def dashboard(server,  messages,dash_app):
               State('input-x-scatter', 'value'),
               State('input-y-scatter', 'value'),
               State('input-color-scatter', 'value'),
-              State('input-size-scatter', 'value'),
-              State('scatter-type-radio', 'value'))
-    def update_scatterplot(n_clicks, input1, input2, input3, input4, input5): 
-
+              State('input-size-scatter', 'value'))
+    def update_scatterplot(n_clicks, input1, input2, input3, input4): 
+        print("3 "+str(input3 is None))
+        print(input3)
+        print("4 "+str(input4 is None))
+        print(input4)
         fig = px.scatter_matrix(df)
         if str(input1) in df.columns and str(input2) in df.columns:
             if (input4 is None) and (input3 is None):
