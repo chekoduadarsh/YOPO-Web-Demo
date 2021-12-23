@@ -38,12 +38,12 @@ def dashboard(server,  messages,dash_app):
 
     # Create Layout
     dash_app.layout = html.Div([
-    dcc.Tabs(id="tabs", value='tab-1', children=[
+    dcc.Tabs(id="tabs", value='tab-1',  children=[
 
         dcc.Tab(label='DataFrame View', value='tab-1' , children = [    
             create_data_table(df)
         ]),
-        dcc.Tab(label='ScatterPlot', value='tab-2', children = [
+        dcc.Tab(label='Scatter Plot', value='tab-2', children = [
 
             html.Div( id='input-1', children = [  
             dcc.Dropdown(id='input-x-scatter', options=dropdowns, placeholder='Enter X axis Value'),
@@ -108,6 +108,81 @@ def dashboard(server,  messages,dash_app):
             html.Div(id='output-state-pie', children = []),
         ]),
 
+        dcc.Tab(label='Tree Map', value='tab-6' , children = [    
+            
+            html.Div( id='input-1', children = [  
+            dcc.Dropdown(id='input-x-tree', options=dropdowns, placeholder='Enter Tree Path', multi=True),
+            dcc.Dropdown(id='input-value-tree', options=dropdowns, placeholder='Enter Value'),
+            ]),
+            html.Div( id='input-2', children = [                    
+            dcc.Dropdown(id='input-color-tree', options=dropdowns, placeholder='Enter Color Value'),
+            ]),
+
+            html.Button(id='submit-button-tree', n_clicks=0, children='Submit'),
+
+            html.Div(id='output-state-tree', children = []),
+        ]),
+
+        dcc.Tab(label='Sunburst Chart', value='tab-7' , children = [    
+            
+            html.Div( id='input-1', children = [  
+            dcc.Dropdown(id='input-x-sun', options=dropdowns, placeholder='Enter Chart Path', multi=True),
+            dcc.Dropdown(id='input-value-sun', options=dropdowns, placeholder='Enter Value'),
+            ]),
+            html.Div( id='input-2', children = [                    
+            dcc.Dropdown(id='input-color-sun', options=dropdowns, placeholder='Enter Color Value'),
+            ]),
+
+            html.Button(id='submit-button-sun', n_clicks=0, children='Submit'),
+
+            html.Div(id='output-state-sun', children = []),
+        ]),
+
+         
+        dcc.Tab(label='Box Plot', value='tab-8' , children = [    
+            
+            html.Div( id='input-1', children = [  
+            dcc.Dropdown(id='input-x-box', options=dropdowns, placeholder='Enter X axis Value'),
+            dcc.Dropdown(id='input-y-box', options=dropdowns, placeholder='Enter Y axis Value'),
+            ]),
+            html.Div( id='input-2', children = [                    
+            dcc.Dropdown(id='input-color-box', options=dropdowns, placeholder='Enter Color axis Value'),
+            ]),
+
+            html.Button(id='submit-button-box', n_clicks=0, children='Submit'),
+
+            html.Div(id='output-state-box', children = []),
+        ]),
+
+        dcc.Tab(label='Histogram', value='tab-9' , children = [    
+            
+            html.Div( id='input-1', children = [  
+            dcc.Dropdown(id='input-x-hist', options=dropdowns, placeholder='X axis value'),
+            ]),
+            html.Div( id='input-2', children = [                    
+            dcc.Dropdown(id='input-color-hist', options=dropdowns, placeholder='Enter Color Value'),
+            ]),
+
+            html.Button(id='submit-button-hist', n_clicks=0, children='Submit'),
+
+            html.Div(id='output-state-hist', children = []),
+        ]),
+
+
+        dcc.Tab(label='HeatMap', value='tab-10' , children = [    
+            
+            html.Div( id='input-1', children = [  
+            dcc.Dropdown(id='input-x-heat', options=dropdowns, placeholder='X axis value'),
+            dcc.Dropdown(id='input-y-heat', options=dropdowns, placeholder='Y axis value'),
+            ]),
+            html.Div( id='input-2', children = [                    
+            dcc.Dropdown(id='input-color-heat', options=dropdowns, placeholder='Enter Color Value'),
+            ]),
+
+            html.Button(id='submit-button-heat', n_clicks=0, children='Submit'),
+
+            html.Div(id='output-state-heat', children = []),
+        ]),
     ]),
     html.Div(id='tabs-content')
     ])  
@@ -159,26 +234,26 @@ def dashboard(server,  messages,dash_app):
         input4 = None
         if str(input1) in df.columns and str(input2) in df.columns:
             if (input4 is None) and (input3 is None):
-                fig = px.line(df, x=str(input1), y=str(input2), markers=True)
+                fig = px.line(df, x=str(input1), y=str(input2))
                 return dcc.Graph(
                         id='graph-1-tabs',
                         figure=fig
                     )
             if (input4 is None) and not(input3 is None):
-                fig = px.line(df, x=str(input1), y=str(input2), color=str(input3), markers=True)
+                fig = px.line(df, x=str(input1), y=str(input2), color=str(input3))
                 return dcc.Graph(
                         id='graph-1-tabs',
                         figure=fig
                     )    
 
             if not(input4 is None) and (input3 is None):
-                fig = px.line(df, x=str(input1), y=str(input2), size=str(input4), markers=True)
+                fig = px.line(df, x=str(input1), y=str(input2), size=str(input4))
                 return dcc.Graph(
                         id='graph-1-tabs',
                         figure=fig
                     )
             if not(input4 is None) and not(input3 is None):
-                fig = px.line(df, x=str(input1), y=str(input2), color=str(input3), size=str(input4), markers=True)
+                fig = px.line(df, x=str(input1), y=str(input2), color=str(input3), size=str(input4))
                 return dcc.Graph(
                         id='graph-1-tabs',
                         figure=fig
@@ -228,7 +303,7 @@ def dashboard(server,  messages,dash_app):
               Input('submit-button-pie', 'n_clicks'),
               State('input-x-pie', 'value'),
               State('input-names-pie', 'value'))
-    def update_barplot(n_clicks, input1, input2): 
+    def update_pieplot(n_clicks, input1, input2): 
         input4 = None
         if str(input1) in df.columns:
             if (input2 is None):
@@ -245,6 +320,149 @@ def dashboard(server,  messages,dash_app):
                     )
         return  "Fill the required fields and click on 'Submit' to generate teh graph you want!!"
 
+    @dash_app.callback(Output('output-state-tree', 'children'),  
+              Input('submit-button-tree', 'n_clicks'),
+              State('input-x-tree', 'value'),
+              State('input-color-tree', 'value'),              
+              State('input-value-tree', 'value'))
+    def update_treeplot(n_clicks, input1, input2, input3): 
+        if not input1 is None:
+            if set(input1).issubset(df.columns):
+                if (input2 is None) and (input3 is None):
+                    fig = px.treemap(df, path=input1)
+                    return dcc.Graph(
+                            id='graph-1-tabs',
+                            figure=fig
+                        )
+                if not (input2 is None) and (input3 is None):
+                    fig = px.treemap(df, path=input1, color=str(input2))
+                    return dcc.Graph(
+                            id='graph-1-tabs',
+                            figure=fig
+                        )
+                if (input2 is None) and not(input3 is None):
+                    fig = px.treemap(df, path=input1, values=str(input3))
+                    return dcc.Graph(
+                            id='graph-1-tabs',
+                            figure=fig
+                        )
+                if not (input2 is None) and not(input3 is None):
+                    fig = px.treemap(df, path=input1, color=str(input2), values=str(input3))
+                    return dcc.Graph(
+                            id='graph-1-tabs',
+                            figure=fig
+                        )
+
+        return  "Fill the required fields and click on 'Submit' to generate teh graph you want!!"
+
+    
+    @dash_app.callback(Output('output-state-sun', 'children'),  
+              Input('submit-button-sun', 'n_clicks'),
+              State('input-x-sun', 'value'),
+              State('input-color-sun', 'value'),              
+              State('input-value-sun', 'value'))
+    def update_sunplot(n_clicks, input1, input2, input3): 
+        if not input1 is None:
+            if set(input1).issubset(df.columns):
+                print(input1)
+                if (input2 is None) and (input3 is None):
+                    fig = px.sunburst(df, path=input1)
+                    return dcc.Graph(
+                            id='graph-1-tabs',
+                            figure=fig
+                        )
+                if not (input2 is None) and (input3 is None):
+                    fig = px.sunburst(df, path=input1, color=str(input2))
+                    return dcc.Graph(
+                            id='graph-1-tabs',
+                            figure=fig
+                        )
+                if (input2 is None) and not(input3 is None):
+                    fig = px.sunburst(df, path=input1, values=str(input3))
+                    return dcc.Graph(
+                            id='graph-1-tabs',
+                            figure=fig
+                        )
+                if not (input2 is None) and not(input3 is None):
+                    fig = px.sunburst(df, path=input1, color=str(input2), values=str(input3))
+                    return dcc.Graph(
+                            id='graph-1-tabs',
+                            figure=fig
+                        )
+
+        return  "Fill the required fields and click on 'Submit' to generate teh graph you want!!"
+
+
+    @dash_app.callback(Output('output-state-box', 'children'),  
+              Input('submit-button-box', 'n_clicks'),
+              State('input-x-box', 'value'),
+              State('input-y-box', 'value'),
+              State('input-color-box', 'value'))
+    def update_barplot(n_clicks, input1, input2, input3): 
+        input4 = None
+        if str(input1) in df.columns and str(input2) in df.columns:
+            if (input4 is None) and (input3 is None):
+                fig = px.box(df, x=str(input1), y=str(input2))
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+            if (input4 is None) and not(input3 is None):
+                fig = px.box(df, x=str(input1), y=str(input2), color=str(input3))
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )    
+
+        return  "Fill the required fields and click on 'Submit' to generate teh graph you want!!"
+    
+    @dash_app.callback(Output('output-state-hist', 'children'),  
+              Input('submit-button-hist', 'n_clicks'),
+              State('input-x-hist', 'value'),
+              State('input-color-hist', 'value'))
+    def update_histogram(n_clicks, input1, input2): 
+        print(input1)
+        if not input1 is None:
+            if input1 in df.columns:
+                if (input2 is None):
+                    fig = px.histogram(df, x=str(input1))
+                    return dcc.Graph(
+                            id='graph-1-tabs',
+                            figure=fig
+                        )
+                if not (input2 is None):
+                    fig = px.histogram(df, x=str(input1), color=str(input2))
+                    return dcc.Graph(
+                            id='graph-1-tabs',
+                            figure=fig
+                        )
+
+        return  "Fill the required fields and click on 'Submit' to generate teh graph you want!!"
+
+  
+    @dash_app.callback(Output('output-state-heat', 'children'),  
+              Input('submit-button-heat', 'n_clicks'),
+              State('input-x-heat', 'value'),
+              State('input-y-heat', 'value'),
+              State('input-color-heat', 'value'))
+    def update_barplot(n_clicks, input1, input2, input3): 
+        input4 = None
+        if str(input1) in df.columns and str(input2) in df.columns:
+            if (input4 is None) and (input3 is None):
+                fig = px.density_heatmap(df, x=str(input1), y=str(input2))
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+            if (input4 is None) and not(input3 is None):
+                fig = px.density_heatmap(df, x=str(input1), y=str(input2), z=str(input3))
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )    
+
+        return  "Fill the required fields and click on 'Submit' to generate teh graph you want!!"
+   
     return dash_app.server
 
 
