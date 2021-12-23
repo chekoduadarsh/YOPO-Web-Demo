@@ -60,7 +60,25 @@ def dashboard(server,  messages,dash_app):
 
             html.Div(id='output-state-scatter', children = []),
         ]),
-        dcc.Tab(label='Bar Graph', value='tab-3' , children = [    
+
+        dcc.Tab(label='Line Plot', value='tab-3', children = [
+
+            html.Div( id='input-1', children = [  
+            dcc.Dropdown(id='input-x-line', options=dropdowns, placeholder='Enter X axis Value'),
+            dcc.Dropdown(id='input-y-line', options=dropdowns, placeholder='Enter Y axis Value'),
+            ]),
+
+            html.Div( id='input-2', children = [                    
+            dcc.Dropdown(id='input-color-line', options=dropdowns, placeholder='Enter Color axis Value'),
+            ]),
+           
+
+            html.Button(id='submit-button-line', n_clicks=0, children='Submit'),
+
+            html.Div(id='output-state-line', children = []),
+        ]),
+
+        dcc.Tab(label='Bar Graph', value='tab-4' , children = [    
             
             html.Div( id='input-1', children = [  
             dcc.Dropdown(id='input-x-bar', options=dropdowns, placeholder='Enter X axis Value'),
@@ -76,7 +94,20 @@ def dashboard(server,  messages,dash_app):
             html.Div(id='output-state-bar', children = []),
         ]),
 
-        
+         dcc.Tab(label='Pie Chart', value='tab-5' , children = [    
+            
+            html.Div( id='input-1', children = [  
+            dcc.Dropdown(id='input-x-pie', options=dropdowns, placeholder='Enter X axis Value'),
+            ]),
+            html.Div( id='input-2', children = [                    
+            dcc.Dropdown(id='input-names-pie', options=dropdowns, placeholder='Enter names Value'),
+            ]),
+
+            html.Button(id='submit-button-pie', n_clicks=0, children='Submit'),
+
+            html.Div(id='output-state-pie', children = []),
+        ]),
+
     ]),
     html.Div(id='tabs-content')
     ])  
@@ -119,6 +150,44 @@ def dashboard(server,  messages,dash_app):
         return  "Fill the required fields and click on 'Submit' to generate teh graph you want!!"
 
 
+    @dash_app.callback(Output('output-state-line', 'children'),
+              Input('submit-button-line', 'n_clicks'),
+              State('input-x-line', 'value'),
+              State('input-y-line', 'value'),
+              State('input-color-line', 'value'))
+    def update_lineplot(n_clicks, input1, input2, input3): 
+        input4 = None
+        if str(input1) in df.columns and str(input2) in df.columns:
+            if (input4 is None) and (input3 is None):
+                fig = px.line(df, x=str(input1), y=str(input2), markers=True)
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+            if (input4 is None) and not(input3 is None):
+                fig = px.line(df, x=str(input1), y=str(input2), color=str(input3), markers=True)
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )    
+
+            if not(input4 is None) and (input3 is None):
+                fig = px.line(df, x=str(input1), y=str(input2), size=str(input4), markers=True)
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+            if not(input4 is None) and not(input3 is None):
+                fig = px.line(df, x=str(input1), y=str(input2), color=str(input3), size=str(input4), markers=True)
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+
+        return  "Fill the required fields and click on 'Submit' to generate teh graph you want!!"
+
+
+
     @dash_app.callback(Output('output-state-bar', 'children'),  
               Input('submit-button-bar', 'n_clicks'),
               State('input-x-bar', 'value'),
@@ -153,6 +222,27 @@ def dashboard(server,  messages,dash_app):
                         figure=fig
                     )
 
+        return  "Fill the required fields and click on 'Submit' to generate teh graph you want!!"
+    
+    @dash_app.callback(Output('output-state-pie', 'children'),  
+              Input('submit-button-pie', 'n_clicks'),
+              State('input-x-pie', 'value'),
+              State('input-names-pie', 'value'))
+    def update_barplot(n_clicks, input1, input2): 
+        input4 = None
+        if str(input1) in df.columns:
+            if (input2 is None):
+                fig = px.pie(df, values=str(input1))
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+            if not (input2 is None):
+                fig = px.pie(df, values=str(input1), names=str(input2))
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
         return  "Fill the required fields and click on 'Submit' to generate teh graph you want!!"
 
     return dash_app.server
