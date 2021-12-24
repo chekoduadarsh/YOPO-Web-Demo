@@ -7,8 +7,8 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 from plotlydash.dashboard import dashboard
 import dash
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import dcc
+from dash import html
 import plotly.express as px
 import pandas as pd
 import string
@@ -32,7 +32,9 @@ dash_app = dash.Dash(
     server=server,
     routes_pathname_prefix='/dashboard/',
     external_stylesheets=[
-        'https://fonts.googleapis.com/css?family=Lato'
+        'https://fonts.googleapis.com/css?family=Lato',
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
+        'styles.css'
     ],
     name='dash-app-1',
 )

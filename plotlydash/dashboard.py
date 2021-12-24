@@ -2,18 +2,18 @@
 import numpy as np
 import pandas as pd
 import dash
-import dash_table
-import dash_html_components as html
-import dash_core_components as dcc
+from dash import dash_table
+from dash import dcc
 from .data import create_dataframe
 from .layout import html_layout
 import plotly.express as px
 import json 
-
+from dash import html
+import dash_daq as daq
 from dash.dependencies import Input, Output, State
 import string
 import random
-  
+import dash_trich_components as dtc
 from flask import Flask, render_template, redirect, url_for, session, request
 import urllib.parse
 import flask
@@ -29,7 +29,8 @@ def dashboard(server,  messages,dash_app):
 
 
     dropdowns = []
-
+    plot_theme = "plotly_dark"
+    
     for column in df.columns:
         dropdowns.append({"label":column, "value":column})
     barmode = [{"label":"stack", "value":"stack"},{"label":"group", "value":"group"}]
@@ -41,9 +42,24 @@ def dashboard(server,  messages,dash_app):
                         {"label":"Expanding Mean", "value":"expanding"},]
     # Custom HTML layout
     dash_app.index_string = html_layout
-
+    card_icon = {
+        "color": "black",
+        "textAlign": "center",
+        "fontSize": 30,
+        "margin": "auto",
+    }
     # Create Layout
     dash_app.layout = html.Div([
+        
+    html.Div(id="theme", style={'display': 'inline-block'}, children=[
+       dtc.ThemeToggle(
+       #daq.ToggleSwitch(
+        id='toggle-switch'),
+
+    html.Div(id='toggle-switch-output')
+    ]),
+
+
     dcc.Tabs(id="tabs", value='tab-1',  children=[
 
         dcc.Tab(label='DataFrame View', value='tab-1' , children = [    
@@ -247,26 +263,26 @@ def dashboard(server,  messages,dash_app):
     def update_scatterplot(n_clicks, input1, input2, input3, input4): 
         if str(input1) in df.columns and str(input2) in df.columns:
             if (input4 is None) and (input3 is None):
-                fig = px.scatter(df, x=str(input1), y=str(input2))
+                fig = px.scatter(df, x=str(input1), y=str(input2),template = plot_theme)
                 return dcc.Graph(
                         id='graph-1-tabs',
                         figure=fig
                     )
             if (input4 is None) and not(input3 is None):
-                fig = px.scatter(df, x=str(input1), y=str(input2), color=str(input3))
+                fig = px.scatter(df, x=str(input1), y=str(input2), color=str(input3),template = plot_theme)
                 return dcc.Graph(
                         id='graph-1-tabs',
                         figure=fig
                     )    
 
             if not(input4 is None) and (input3 is None):
-                fig = px.scatter(df, x=str(input1), y=str(input2), size=str(input4))
+                fig = px.scatter(df, x=str(input1), y=str(input2), size=str(input4),template = plot_theme)
                 return dcc.Graph(
                         id='graph-1-tabs',
                         figure=fig
                     )
             if not(input4 is None) and not(input3 is None):
-                fig = px.scatter(df, x=str(input1), y=str(input2), color=str(input3), size=str(input4))
+                fig = px.scatter(df, x=str(input1), y=str(input2), color=str(input3), size=str(input4),template = plot_theme)
                 return dcc.Graph(
                         id='graph-1-tabs',
                         figure=fig
@@ -284,26 +300,26 @@ def dashboard(server,  messages,dash_app):
         input4 = None
         if str(input1) in df.columns and str(input2) in df.columns:
             if (input4 is None) and (input3 is None):
-                fig = px.line(df, x=str(input1), y=str(input2))
+                fig = px.line(df, x=str(input1), y=str(input2),template = plot_theme)
                 return dcc.Graph(
                         id='graph-1-tabs',
                         figure=fig
                     )
             if (input4 is None) and not(input3 is None):
-                fig = px.line(df, x=str(input1), y=str(input2), color=str(input3))
+                fig = px.line(df, x=str(input1), y=str(input2), color=str(input3),template = plot_theme)
                 return dcc.Graph(
                         id='graph-1-tabs',
                         figure=fig
                     )    
 
             if not(input4 is None) and (input3 is None):
-                fig = px.line(df, x=str(input1), y=str(input2), size=str(input4))
+                fig = px.line(df, x=str(input1), y=str(input2), size=str(input4),template = plot_theme)
                 return dcc.Graph(
                         id='graph-1-tabs',
                         figure=fig
                     )
             if not(input4 is None) and not(input3 is None):
-                fig = px.line(df, x=str(input1), y=str(input2), color=str(input3), size=str(input4))
+                fig = px.line(df, x=str(input1), y=str(input2), color=str(input3), size=str(input4),template = plot_theme)
                 return dcc.Graph(
                         id='graph-1-tabs',
                         figure=fig
@@ -322,26 +338,26 @@ def dashboard(server,  messages,dash_app):
     def update_barplot(n_clicks, input1, input2, input3, input4): 
         if str(input1) in df.columns and str(input2) in df.columns:
             if (input4 is None) and (input3 is None):
-                fig = px.bar(df, x=str(input1), y=str(input2))
+                fig = px.bar(df, x=str(input1), y=str(input2),template = plot_theme)
                 return dcc.Graph(
                         id='graph-1-tabs',
                         figure=fig
                     )
             if (input4 is None) and not(input3 is None):
-                fig = px.bar(df, x=str(input1), y=str(input2), color=str(input3))
+                fig = px.bar(df, x=str(input1), y=str(input2), color=str(input3),template = plot_theme)
                 return dcc.Graph(
                         id='graph-1-tabs',
                         figure=fig
                     )    
 
             if not(input4 is None) and (input3 is None):
-                fig = px.bar(df, x=str(input1), y=str(input2), barmode=str(input4))
+                fig = px.bar(df, x=str(input1), y=str(input2), barmode=str(input4),template = plot_theme)
                 return dcc.Graph(
                         id='graph-1-tabs',
                         figure=fig
                     )
             if not(input4 is None) and not(input3 is None):
-                fig = px.bar(df, x=str(input1), y=str(input2), color=str(input3), barmode=str(input4))
+                fig = px.bar(df, x=str(input1), y=str(input2), color=str(input3), barmode=str(input4),template = plot_theme)
                 return dcc.Graph(
                         id='graph-1-tabs',
                         figure=fig
@@ -357,13 +373,13 @@ def dashboard(server,  messages,dash_app):
         input4 = None
         if str(input1) in df.columns:
             if (input2 is None):
-                fig = px.pie(df, values=str(input1))
+                fig = px.pie(df, values=str(input1),template = plot_theme)
                 return dcc.Graph(
                         id='graph-1-tabs',
                         figure=fig
                     )
             if not (input2 is None):
-                fig = px.pie(df, values=str(input1), names=str(input2))
+                fig = px.pie(df, values=str(input1), names=str(input2),template = plot_theme)
                 return dcc.Graph(
                         id='graph-1-tabs',
                         figure=fig
@@ -379,25 +395,25 @@ def dashboard(server,  messages,dash_app):
         if not input1 is None:
             if set(input1).issubset(df.columns):
                 if (input2 is None) and (input3 is None):
-                    fig = px.treemap(df, path=input1)
+                    fig = px.treemap(df, path=input1,template = plot_theme)
                     return dcc.Graph(
                             id='graph-1-tabs',
                             figure=fig
                         )
                 if not (input2 is None) and (input3 is None):
-                    fig = px.treemap(df, path=input1, color=str(input2))
+                    fig = px.treemap(df, path=input1, color=str(input2),template = plot_theme)
                     return dcc.Graph(
                             id='graph-1-tabs',
                             figure=fig
                         )
                 if (input2 is None) and not(input3 is None):
-                    fig = px.treemap(df, path=input1, values=str(input3))
+                    fig = px.treemap(df, path=input1, values=str(input3),template = plot_theme)
                     return dcc.Graph(
                             id='graph-1-tabs',
                             figure=fig
                         )
                 if not (input2 is None) and not(input3 is None):
-                    fig = px.treemap(df, path=input1, color=str(input2), values=str(input3))
+                    fig = px.treemap(df, path=input1, color=str(input2), values=str(input3),template = plot_theme)
                     return dcc.Graph(
                             id='graph-1-tabs',
                             figure=fig
@@ -415,25 +431,25 @@ def dashboard(server,  messages,dash_app):
         if not input1 is None:
             if set(input1).issubset(df.columns):
                 if (input2 is None) and (input3 is None):
-                    fig = px.sunburst(df, path=input1)
+                    fig = px.sunburst(df, path=input1,template = plot_theme)
                     return dcc.Graph(
                             id='graph-1-tabs',
                             figure=fig
                         )
                 if not (input2 is None) and (input3 is None):
-                    fig = px.sunburst(df, path=input1, color=str(input2))
+                    fig = px.sunburst(df, path=input1, color=str(input2),template = plot_theme)
                     return dcc.Graph(
                             id='graph-1-tabs',
                             figure=fig
                         )
                 if (input2 is None) and not(input3 is None):
-                    fig = px.sunburst(df, path=input1, values=str(input3))
+                    fig = px.sunburst(df, path=input1, values=str(input3),template = plot_theme)
                     return dcc.Graph(
                             id='graph-1-tabs',
                             figure=fig
                         )
                 if not (input2 is None) and not(input3 is None):
-                    fig = px.sunburst(df, path=input1, color=str(input2), values=str(input3))
+                    fig = px.sunburst(df, path=input1, color=str(input2), values=str(input3),template = plot_theme)
                     return dcc.Graph(
                             id='graph-1-tabs',
                             figure=fig
@@ -451,13 +467,13 @@ def dashboard(server,  messages,dash_app):
         input4 = None
         if str(input1) in df.columns and str(input2) in df.columns:
             if (input4 is None) and (input3 is None):
-                fig = px.box(df, x=str(input1), y=str(input2))
+                fig = px.box(df, x=str(input1), y=str(input2),template = plot_theme)
                 return dcc.Graph(
                         id='graph-1-tabs',
                         figure=fig
                     )
             if (input4 is None) and not(input3 is None):
-                fig = px.box(df, x=str(input1), y=str(input2), color=str(input3))
+                fig = px.box(df, x=str(input1), y=str(input2), color=str(input3),template = plot_theme)
                 return dcc.Graph(
                         id='graph-1-tabs',
                         figure=fig
@@ -470,17 +486,16 @@ def dashboard(server,  messages,dash_app):
               State('input-x-hist', 'value'),
               State('input-color-hist', 'value'))
     def update_histogram(n_clicks, input1, input2): 
-        print(input1)
         if not input1 is None:
             if input1 in df.columns:
                 if (input2 is None):
-                    fig = px.histogram(df, x=str(input1))
+                    fig = px.histogram(df, x=str(input1),template = plot_theme)
                     return dcc.Graph(
                             id='graph-1-tabs',
                             figure=fig
                         )
                 if not (input2 is None):
-                    fig = px.histogram(df, x=str(input1), color=str(input2))
+                    fig = px.histogram(df, x=str(input1), color=str(input2),template = plot_theme)
                     return dcc.Graph(
                             id='graph-1-tabs',
                             figure=fig
@@ -499,13 +514,13 @@ def dashboard(server,  messages,dash_app):
         if not(input1 is None) and not(input2 is None):
             if str(input1) in df.columns and str(input2) in df.columns:
                 if (input4 is None) and (input3 is None):
-                    fig = px.density_heatmap(df, x=str(input1), y=str(input2))
+                    fig = px.density_heatmap(df, x=str(input1), y=str(input2),template = plot_theme)
                     return dcc.Graph(
                             id='graph-1-tabs',
                             figure=fig
                         )
                 if (input4 is None) and not(input3 is None):
-                    fig = px.density_heatmap(df, x=str(input1), y=str(input2), z=str(input3))
+                    fig = px.density_heatmap(df, x=str(input1), y=str(input2), z=str(input3),template = plot_theme)
                     return dcc.Graph(
                             id='graph-1-tabs',
                             figure=fig
@@ -521,34 +536,40 @@ def dashboard(server,  messages,dash_app):
               State('input-color-violin', 'value'))
     def update_violinplot(n_clicks, input1, input2, input3): 
         if not(input1 is None):
-            print(input1)
             if str(input1) in df.columns:
                     if not(input1 is None) and (input3 is None) and (input2 is None):
-                        fig = px.violin(df, y=str(input1))
+                        fig = px.violin(df, y=str(input1),template = plot_theme)
                         return dcc.Graph(
                                 id='graph-1-tabs',
                                 figure=fig
                             )
                     if not(input1 is None) and (input3 is None) and not(input2 is None):
-                        fig = px.violin(df, y=str(input1), x = str(input2))
+                        fig = px.violin(df, y=str(input1), x = str(input2),template = plot_theme)
                         return dcc.Graph(
                                 id='graph-1-tabs',
                                 figure=fig
                             )
                     if not(input1 is None) and not(input3 is None) and (input2 is None):
-                        fig = px.violin(df, y=str(input1), color=str(input3))
+                        fig = px.violin(df, y=str(input1), color=str(input3),template = plot_theme)
                         return dcc.Graph(
                                 id='graph-1-tabs',
                                 figure=fig
                             )
                     if not(input1 is None) and not(input3 is None) and not(input2 is None):
-                        fig = px.violin(df, y=str(input1), x = str(input2), color=str(input3))
+                        fig = px.violin(df, y=str(input1), x = str(input2), color=str(input3),template = plot_theme)
                         return dcc.Graph(
                                 id='graph-1-tabs',
                                 figure=fig
                             )                                                                                                             
         return  "Fill the required fields and click on 'Submit' to generate teh graph you want!!"
    
+    @dash_app.callback(
+        Output('toggle-switch-output', 'children'),
+        Input('toggle-switch', 'value')
+    )
+    def update_output(value):
+        return 'The switch is {}.'.format(value)
+
 
 
     @dash_app.callback(Output('output-state-regscatter', 'children'),
@@ -561,26 +582,26 @@ def dashboard(server,  messages,dash_app):
     def update_regscatterplot(n_clicks, input1, input2, input3, input4, input5): 
         if str(input1) in df.columns and str(input2) in df.columns:
             if (input4 is None) and (input3 is None) and not(input5 is None):
-                fig = px.scatter(df, x=str(input1), y=str(input2), trendline=str(input5))
+                fig = px.scatter(df, x=str(input1), y=str(input2), trendline=str(input5),template = plot_theme)
                 return dcc.Graph(
                         id='graph-1-tabs',
                         figure=fig
                     )
             if (input4 is None) and not(input3 is None) and not(input5 is None):
-                fig = px.scatter(df, x=str(input1), y=str(input2), color=str(input3), trendline=str(input5))
+                fig = px.scatter(df, x=str(input1), y=str(input2), color=str(input3), trendline=str(input5),template = plot_theme)
                 return dcc.Graph(
                         id='graph-1-tabs',
                         figure=fig
                     )    
 
             if not(input4 is None) and (input3 is None) and not(input5 is None):
-                fig = px.scatter(df, x=str(input1), y=str(input2), size=str(input4), trendline=str(input5))
+                fig = px.scatter(df, x=str(input1), y=str(input2), size=str(input4), trendline=str(input5),template = plot_theme)
                 return dcc.Graph(
                         id='graph-1-tabs',
                         figure=fig
                     )
             if not(input4 is None) and not(input3 is None) and not(input5 is None):
-                fig = px.scatter(df, x=str(input1), y=str(input2), color=str(input3), size=str(input4), trendline=str(input5))
+                fig = px.scatter(df, x=str(input1), y=str(input2), color=str(input3), size=str(input4), trendline=str(input5),template = plot_theme)
                 return dcc.Graph(
                         id='graph-1-tabs',
                         figure=fig
@@ -605,5 +626,6 @@ def create_data_table(df):
         sort_action="native",
         sort_mode='native',
         page_size=300
+        
     )
     return table
