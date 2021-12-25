@@ -29,7 +29,33 @@ def dashboard(server,  messages,dash_app):
 
 
     dropdowns = []
+
+
     plot_theme = "plotly_dark"
+    tab_style = {
+        'borderBottom': '1px solid #d6d6d6',
+        'padding': '6px',
+        'fontWeight': 'bold',
+        'backgroundColor': 'black',
+        'color': 'white',
+    }
+
+    dropdown_style = {
+        'fontWeight': 'bold',
+        'backgroundColor': 'black',
+        'color': 'white',
+    }
+
+    tab_selected_style = {
+        'borderTop': '1px solid #d6d6d6',
+        'borderBottom': '1px solid #d6d6d6',
+        'backgroundColor': '#119DFF',
+        'color': 'white',
+        'padding': '6px'
+    }
+
+
+
     
     for column in df.columns:
         dropdowns.append({"label":column, "value":column})
@@ -50,28 +76,19 @@ def dashboard(server,  messages,dash_app):
     }
     # Create Layout
     dash_app.layout = html.Div([
-        
-    html.Div(id="theme", style={'display': 'inline-block'}, children=[
-       dtc.ThemeToggle(
-       #daq.ToggleSwitch(
-        id='toggle-switch'),
-
-    html.Div(id='toggle-switch-output')
-    ]),
-
 
     dcc.Tabs(id="tabs", value='tab-1',  children=[
 
-        dcc.Tab(label='DataFrame View', value='tab-1' , children = [    
+        dcc.Tab(label='DataFrame View', value='tab-1' , style=tab_style, selected_style=tab_selected_style, children = [    
             create_data_table(df)
         ]),
-        dcc.Tab(label='Basic Plots', value='tab-basic' , children = [           
+        dcc.Tab(label='Basic Plots', value='tab-basic' , style=tab_style, selected_style=tab_selected_style, children = [           
             dcc.Tabs(id="tabs-basic",  children=[
-                dcc.Tab(label='Scatter Plot', value='tab-2', children = [
+                dcc.Tab(label='Scatter Plot', value='tab-2' , style=tab_style, selected_style=tab_selected_style, children = [
 
                     html.Div( id='input-1', children = [  
                     dcc.Dropdown(id='input-x-scatter', options=dropdowns, placeholder='Enter X axis Value'),
-                    dcc.Dropdown(id='input-y-scatter', options=dropdowns, placeholder='Enter Y axis Value'),
+                    dcc.Dropdown(id='input-y-scatter', options=dropdowns,placeholder='Enter Y axis Value'),
                     ]),
 
                     html.Div( id='input-2', children = [                    
@@ -85,14 +102,14 @@ def dashboard(server,  messages,dash_app):
                     html.Div(id='output-state-scatter', children = []),
                 ]),
 
-                dcc.Tab(label='Line Plot', value='tab-3', children = [
+                dcc.Tab(label='Line Plot', value='tab-3' , style=tab_style, selected_style=tab_selected_style, children = [
 
-                    html.Div( id='input-1', children = [  
+                    html.Div( id='input-3', children = [  
                     dcc.Dropdown(id='input-x-line', options=dropdowns, placeholder='Enter X axis Value'),
                     dcc.Dropdown(id='input-y-line', options=dropdowns, placeholder='Enter Y axis Value'),
                     ]),
 
-                    html.Div( id='input-2', children = [                    
+                    html.Div( id='input-21', children = [                    
                     dcc.Dropdown(id='input-color-line', options=dropdowns, placeholder='Enter Color axis Value'),
                     ]),
                 
@@ -102,13 +119,13 @@ def dashboard(server,  messages,dash_app):
                     html.Div(id='output-state-line', children = []),
                 ]),
 
-                dcc.Tab(label='Bar Graph', value='tab-4' , children = [    
+                dcc.Tab(label='Bar Graph', value='tab-4' , style=tab_style, selected_style=tab_selected_style, children = [    
                     
-                    html.Div( id='input-1', children = [  
+                    html.Div( id='input-4', children = [  
                     dcc.Dropdown(id='input-x-bar', options=dropdowns, placeholder='Enter X axis Value'),
                     dcc.Dropdown(id='input-y-bar', options=dropdowns, placeholder='Enter Y axis Value'),
                     ]),
-                    html.Div( id='input-2', children = [                    
+                    html.Div( id='input-22', children = [                    
                     dcc.Dropdown(id='input-color-bar', options=dropdowns, placeholder='Enter Color axis Value'),
                     dcc.Dropdown(id='input-barmode-bar', options=barmode, placeholder='Enter BarMode'),
                     ]),
@@ -118,12 +135,12 @@ def dashboard(server,  messages,dash_app):
                     html.Div(id='output-state-bar', children = []),
                 ]),
 
-                dcc.Tab(label='Pie Chart', value='tab-5' , children = [    
+                dcc.Tab(label='Pie Chart', value='tab-5' , style=tab_style, selected_style=tab_selected_style, children = [    
                     
-                    html.Div( id='input-1', children = [  
+                    html.Div( id='input-5', children = [  
                     dcc.Dropdown(id='input-x-pie', options=dropdowns, placeholder='Enter X axis Value'),
                     ]),
-                    html.Div( id='input-2', children = [                    
+                    html.Div( id='input-23', children = [                    
                     dcc.Dropdown(id='input-names-pie', options=dropdowns, placeholder='Enter names Value'),
                     ]),
 
@@ -132,13 +149,13 @@ def dashboard(server,  messages,dash_app):
                     html.Div(id='output-state-pie', children = []),
                 ]),
 
-                dcc.Tab(label='Tree Map', value='tab-6' , children = [    
+                dcc.Tab(label='Tree Map', value='tab-6' , style=tab_style, selected_style=tab_selected_style, children = [    
                     
-                    html.Div( id='input-1', children = [  
+                    html.Div( id='input-6', children = [  
                     dcc.Dropdown(id='input-x-tree', options=dropdowns, placeholder='Enter Tree Path', multi=True),
                     dcc.Dropdown(id='input-value-tree', options=dropdowns, placeholder='Enter Value'),
                     ]),
-                    html.Div( id='input-2', children = [                    
+                    html.Div( id='input-24', children = [                    
                     dcc.Dropdown(id='input-color-tree', options=dropdowns, placeholder='Enter Color Value'),
                     ]),
 
@@ -147,13 +164,13 @@ def dashboard(server,  messages,dash_app):
                     html.Div(id='output-state-tree', children = []),
                 ]),
 
-                dcc.Tab(label='Sunburst Chart', value='tab-7' , children = [    
+                dcc.Tab(label='Sunburst Chart', value='tab-7' , style=tab_style, selected_style=tab_selected_style, children = [    
                     
-                    html.Div( id='input-1', children = [  
+                    html.Div( id='input-7', children = [  
                     dcc.Dropdown(id='input-x-sun', options=dropdowns, placeholder='Enter Chart Path', multi=True),
                     dcc.Dropdown(id='input-value-sun', options=dropdowns, placeholder='Enter Value'),
                     ]),
-                    html.Div( id='input-2', children = [                    
+                    html.Div( id='input-25', children = [                    
                     dcc.Dropdown(id='input-color-sun', options=dropdowns, placeholder='Enter Color Value'),
                     ]),
 
@@ -163,15 +180,15 @@ def dashboard(server,  messages,dash_app):
                 ]),
             ]),
         ]),
-        dcc.Tab(label='Statistical Plots', value='tab-stat' , children = [           
+        dcc.Tab(label='Statistical Plots', value='tab-stat' , style=tab_style, selected_style=tab_selected_style, children = [           
             dcc.Tabs(id="tabs-stat", children=[
-                dcc.Tab(label='Box Plot', value='tab-8' , children = [    
+                dcc.Tab(label='Box Plot', value='tab-8' , style=tab_style, selected_style=tab_selected_style, children = [    
                     
-                    html.Div( id='input-1', children = [  
+                    html.Div( id='input-8', children = [  
                     dcc.Dropdown(id='input-x-box', options=dropdowns, placeholder='Enter X axis Value'),
                     dcc.Dropdown(id='input-y-box', options=dropdowns, placeholder='Enter Y axis Value'),
                     ]),
-                    html.Div( id='input-2', children = [                    
+                    html.Div( id='input-26', children = [                    
                     dcc.Dropdown(id='input-color-box', options=dropdowns, placeholder='Enter Color axis Value'),
                     ]),
 
@@ -180,12 +197,12 @@ def dashboard(server,  messages,dash_app):
                     html.Div(id='output-state-box', children = []),
                 ]),
 
-                dcc.Tab(label='Histogram', value='tab-9' , children = [    
+                dcc.Tab(label='Histogram', value='tab-9' , style=tab_style, selected_style=tab_selected_style, children = [    
                     
-                    html.Div( id='input-1', children = [  
+                    html.Div( id='input-9', children = [  
                     dcc.Dropdown(id='input-x-hist', options=dropdowns, placeholder='X axis value'),
                     ]),
-                    html.Div( id='input-2', children = [                    
+                    html.Div( id='input-27', children = [                    
                     dcc.Dropdown(id='input-color-hist', options=dropdowns, placeholder='Enter Color Value'),
                     ]),
 
@@ -195,13 +212,13 @@ def dashboard(server,  messages,dash_app):
                 ]),
 
 
-                dcc.Tab(label='HeatMap', value='tab-10' , children = [    
+                dcc.Tab(label='HeatMap', value='tab-10' , style=tab_style, selected_style=tab_selected_style, children = [    
                     
-                    html.Div( id='input-1', children = [  
+                    html.Div( id='input-10', children = [  
                     dcc.Dropdown(id='input-x-heat', options=dropdowns, placeholder='X axis value'),
                     dcc.Dropdown(id='input-y-heat', options=dropdowns, placeholder='Y axis value'),
                     ]),
-                    html.Div( id='input-2', children = [                    
+                    html.Div( id='input-28', children = [                    
                     dcc.Dropdown(id='input-color-heat', options=dropdowns, placeholder='Enter Color Value'),
                     ]),
 
@@ -210,13 +227,13 @@ def dashboard(server,  messages,dash_app):
                     html.Div(id='output-state-heat', children = []),
                 ]),
 
-                dcc.Tab(label='Violin Plot', value='tab-11' , children = [    
+                dcc.Tab(label='Violin Plot', value='tab-11' , style=tab_style, selected_style=tab_selected_style, children = [    
                     
-                    html.Div( id='input-1', children = [  
+                    html.Div( id='input-11', children = [  
                     dcc.Dropdown(id='input-x-violin', options=dropdowns, placeholder='X axis value'),
                     dcc.Dropdown(id='input-y-violin', options=dropdowns, placeholder='Y axis value'),
                     ]),
-                    html.Div( id='input-2', children = [                    
+                    html.Div( id='input-29', children = [                    
                     dcc.Dropdown(id='input-color-violin', options=dropdowns, placeholder='Enter Color Value'),
                     ]),
 
@@ -226,17 +243,17 @@ def dashboard(server,  messages,dash_app):
                 ]),
             ]),
         ]),
-        dcc.Tab(label='Trend Line', value='tab-trend' , children = [           
-            dcc.Tabs(id="tabs-stat", children=[
-                dcc.Tab(label='Regressions', value='tab-8' , children = [   
+        dcc.Tab(label='Trend Line', value='tab-trend' , style=tab_style, selected_style=tab_selected_style, children = [           
+            dcc.Tabs(id="tabs-trend", children=[
+                dcc.Tab(label='Regressions', value='tab-8' , style=tab_style, selected_style=tab_selected_style, children = [   
 
-                    html.Div( id='input-1', children = [  
+                    html.Div( id='input-12', children = [  
                     dcc.Dropdown(id='input-x-regscatter', options=dropdowns, placeholder='Enter X axis Value'),
                     dcc.Dropdown(id='input-y-regscatter', options=dropdowns, placeholder='Enter Y axis Value'),
                     dcc.Dropdown(id='input-reg-regscatter', options=regressioon_Algos, placeholder='Enter Regression Algorithmm'),
                     ]),
 
-                    html.Div( id='input-2', children = [                    
+                    html.Div( id='input-20', children = [                    
                     dcc.Dropdown(id='input-color-regscatter', options=dropdowns, placeholder='Enter Color axis Value'),
                     dcc.Dropdown(id='input-size-regscatter', options=dropdowns, placeholder='Enter Size axis Value'),
                     ]),
@@ -252,7 +269,6 @@ def dashboard(server,  messages,dash_app):
     ]),
     html.Div(id='tabs-content')
     ])  
-
 
     @dash_app.callback(Output('output-state-scatter', 'children'),
               Input('submit-button-scatter', 'n_clicks'),

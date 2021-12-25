@@ -8,6 +8,8 @@
     --terciary: #00BA5B;
 }
 
+/* 	--textDefault: #fff;*/
+
 :root[data-theme='dark'] {
 	--bgColor: #000;
     --primary: #ACC2FF;
@@ -28,3 +30,4 @@ body {
       background: var(--terciary);
       border: 1px solid var(--secondary);
   }
+

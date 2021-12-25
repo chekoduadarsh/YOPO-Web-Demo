@@ -6,6 +6,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 from plotlydash.dashboard import dashboard
+
+import dash_bootstrap_components as dbc
 import dash
 from dash import dcc
 from dash import html
@@ -34,7 +36,7 @@ dash_app = dash.Dash(
     external_stylesheets=[
         'https://fonts.googleapis.com/css?family=Lato',
         'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
-        'styles.css'
+        'styles.css'#,'dropdown.css'
     ],
     name='dash-app-1',
 )
@@ -51,6 +53,7 @@ class NameForm(FlaskForm):
 def index():
     form = NameForm()
     message = ""
+    name="https://raw.githubusercontent.com/venky14/iris-dataset/master/iris-species/Iris.csv"
     if form.validate_on_submit():
         name = form.name.data
         # empty the form field
