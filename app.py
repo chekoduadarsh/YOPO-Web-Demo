@@ -53,7 +53,6 @@ class NameForm(FlaskForm):
 def index():
     form = NameForm()
     message = ""
-    name="https://raw.githubusercontent.com/venky14/iris-dataset/master/iris-species/Iris.csv"
     if form.validate_on_submit():
         name = form.name.data
         # empty the form field
@@ -63,12 +62,9 @@ def index():
 
         form.name.data = ""
         # redirect the browser to another route and template
-        print(messages)
         global server
-
         with server.test_request_context('/dashboard/'):
             server = dashboard(server, messages, dash_app)
-        print(url_for('/dashboard/' , id = messages))
         return redirect( url_for('/dashboard/' , id = messages))
     return render_template('index.html',  form=form, message=message)
 

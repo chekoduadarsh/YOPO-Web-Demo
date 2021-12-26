@@ -243,6 +243,65 @@ def dashboard(server,  messages,dash_app):
                 ]),
             ]),
         ]),
+        dcc.Tab(label='Geological Plots', value='tab-geo' , style=tab_style, selected_style=tab_selected_style, children = [  
+             dcc.Tabs(id="tabs-stat", children=[    
+                 #dcc.Tab(label='Map Choropleth Plot', value='tab-map-choropleth' , style=tab_style, selected_style=tab_selected_style, children = [   
+
+
+                 #]),
+                dcc.Tab(label='Map Density Heatmap', value='tab-map-density' , style=tab_style, selected_style=tab_selected_style, children = [   
+
+                    html.Div( id='input-map-density-mandatory', children = [  
+                    dcc.Dropdown(id='input-map-density-lat', options=dropdowns, placeholder='Enter Latitude Value'),
+                    dcc.Dropdown(id='input-map-density-lon', options=dropdowns, placeholder='Enter Longitude Value'),
+                    ]),
+
+                    html.Div( id='input-map-density-not-mandatory', children = [  
+                    dcc.Dropdown(id='input-map-density-mag', options=dropdowns, placeholder='Enter Magnitude Value'),
+                    dcc.Input(id='input-map-density-radius', placeholder='Enter radius Value')
+                    ]),
+
+                    html.Button(id='submit-button-map-density', n_clicks=0, children='Submit'),
+
+                    html.Div(id='output-state-map-density', children = []),
+
+
+                 ]),
+                dcc.Tab(label='Line on Maps Heatmap', value='tab-map-line' , style=tab_style, selected_style=tab_selected_style, children = [   
+
+                    html.Div( id='input-map-line-mandatory', children = [  
+                    dcc.Dropdown(id='input-map-line-location', options=dropdowns, placeholder='Enter Loaction Value')
+                    ]),
+
+                    html.Div( id='input-map-line-not-mandatory', children = [  
+                    dcc.Dropdown(id='input-map-line-color', options=dropdowns, placeholder='Enter Color Value')
+                    ]),
+
+                    html.Button(id='submit-button-map-line', n_clicks=0, children='Submit'),
+
+                    html.Div(id='output-state-map-line', children = []),
+
+                 ]),
+                dcc.Tab(label='Scatterplot on Maps', value='tab-map-scatter' , style=tab_style, selected_style=tab_selected_style, children = [   
+
+                    html.Div( id='input-map-scatter-mandatory', children = [  
+                    dcc.Dropdown(id='input-map-scatter-location', options=dropdowns, placeholder='Enter Loaction Value'),
+                    #dcc.Dropdown(id='input-map-scatter-lat', options=dropdowns, placeholder='Enter Latitude Value'),
+                    #dcc.Dropdown(id='input-map-scatter-lon', options=dropdowns, placeholder='Enter Longitude Value'), #disabled due to mapbox token
+                    ]),
+
+                    html.Div( id='input-map-scatter-not-mandatory', children = [  
+                    dcc.Dropdown(id='input-map-scatter-color', options=dropdowns, placeholder='Enter Color Value'),
+                    dcc.Dropdown(id='input-map-scatter-size', options=dropdowns, placeholder='Enter Size Value')
+                    ]),
+
+                    html.Button(id='submit-button-map-scatter', n_clicks=0, children='Submit'),
+
+                    html.Div(id='output-state-map-scatter', children = []),
+
+                 ]),
+             ]),
+        ]) ,  
         dcc.Tab(label='Trend Line', value='tab-trend' , style=tab_style, selected_style=tab_selected_style, children = [           
             dcc.Tabs(id="tabs-trend", children=[
                 dcc.Tab(label='Regressions', value='tab-8' , style=tab_style, selected_style=tab_selected_style, children = [   
@@ -304,7 +363,7 @@ def dashboard(server,  messages,dash_app):
                         figure=fig
                     )
 
-        return  "Fill the required fields and click on 'Submit' to generate teh graph you want!!"
+        return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
 
 
     @dash_app.callback(Output('output-state-line', 'children'),
@@ -341,7 +400,7 @@ def dashboard(server,  messages,dash_app):
                         figure=fig
                     )
 
-        return  "Fill the required fields and click on 'Submit' to generate teh graph you want!!"
+        return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
 
 
 
@@ -379,7 +438,7 @@ def dashboard(server,  messages,dash_app):
                         figure=fig
                     )
 
-        return  "Fill the required fields and click on 'Submit' to generate teh graph you want!!"
+        return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
     
     @dash_app.callback(Output('output-state-pie', 'children'),  
               Input('submit-button-pie', 'n_clicks'),
@@ -400,7 +459,7 @@ def dashboard(server,  messages,dash_app):
                         id='graph-1-tabs',
                         figure=fig
                     )
-        return  "Fill the required fields and click on 'Submit' to generate teh graph you want!!"
+        return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
 
     @dash_app.callback(Output('output-state-tree', 'children'),  
               Input('submit-button-tree', 'n_clicks'),
@@ -435,7 +494,7 @@ def dashboard(server,  messages,dash_app):
                             figure=fig
                         )
 
-        return  "Fill the required fields and click on 'Submit' to generate teh graph you want!!"
+        return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
 
     
     @dash_app.callback(Output('output-state-sun', 'children'),  
@@ -471,7 +530,7 @@ def dashboard(server,  messages,dash_app):
                             figure=fig
                         )
 
-        return  "Fill the required fields and click on 'Submit' to generate teh graph you want!!"
+        return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
 
 
     @dash_app.callback(Output('output-state-box', 'children'),  
@@ -495,7 +554,7 @@ def dashboard(server,  messages,dash_app):
                         figure=fig
                     )    
 
-        return  "Fill the required fields and click on 'Submit' to generate teh graph you want!!"
+        return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
     
     @dash_app.callback(Output('output-state-hist', 'children'),  
               Input('submit-button-hist', 'n_clicks'),
@@ -517,7 +576,7 @@ def dashboard(server,  messages,dash_app):
                             figure=fig
                         )
 
-        return  "Fill the required fields and click on 'Submit' to generate teh graph you want!!"
+        return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
 
   
     @dash_app.callback(Output('output-state-heat', 'children'),  
@@ -542,7 +601,7 @@ def dashboard(server,  messages,dash_app):
                             figure=fig
                         )    
 
-        return  "Fill the required fields and click on 'Submit' to generate teh graph you want!!"
+        return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
    
      
     @dash_app.callback(Output('output-state-violin', 'children'),  
@@ -577,16 +636,8 @@ def dashboard(server,  messages,dash_app):
                                 id='graph-1-tabs',
                                 figure=fig
                             )                                                                                                             
-        return  "Fill the required fields and click on 'Submit' to generate teh graph you want!!"
+        return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
    
-    @dash_app.callback(
-        Output('toggle-switch-output', 'children'),
-        Input('toggle-switch', 'value')
-    )
-    def update_output(value):
-        return 'The switch is {}.'.format(value)
-
-
 
     @dash_app.callback(Output('output-state-regscatter', 'children'),
               Input('submit-button-regscatter', 'n_clicks'),
@@ -623,10 +674,130 @@ def dashboard(server,  messages,dash_app):
                         figure=fig
                     )
 
-        return  "Fill the required fields and click on 'Submit' to generate teh graph you want!!"
+        return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
 
+    
+    @dash_app.callback(Output('output-state-map-line', 'children'),  
+              Input('submit-button-map-line', 'n_clicks'),
+              State('input-map-line-location', 'value'),
+              State('input-map-line-color', 'value'))
+    def update_maplineplot(n_clicks, input1, input2): 
+        if str(input1) in df.columns:
+            if (input2 is None):
+                fig = px.line_geo(df, locations=str(input1),template = plot_theme)
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+            if not (input2 is None):
+                fig = px.line_geo(df, locations=str(input1), color=str(input2),template = plot_theme)
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+        return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
 
-   
+    
+    @dash_app.callback(Output('output-state-map-scatter', 'children'),  
+              Input('submit-button-map-scatter', 'n_clicks'),
+              State('input-map-scatter-location', 'value'),
+              State('input-map-scatter-color', 'value'),
+              State('input-map-scatter-size', 'value'))
+    def update_mapscatterplot(n_clicks, input1, input2, input3): 
+        input4 = None
+        input5 = None  #disabled due to mapbox token
+        if str(input1) in df.columns and (input4 is None) and (input5 is None):
+            if (input2 is None) and (input3 is None):
+                fig = px.scatter_geo(df, locations=str(input1),template = plot_theme)
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+            if not (input2 is None) and (input3 is None):
+                fig = px.scatter_geo(df, locations=str(input1), color=str(input2),template = plot_theme)
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+
+            if (input2 is None) and not(input3 is None):
+                fig = px.scatter_geo(df, locations=str(input1), size=str(input3),template = plot_theme)
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+            if not (input2 is None) and not(input3 is None):
+                fig = px.scatter_geo(df, locations=str(input1), color=str(input2), size=str(input3),template = plot_theme)
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+
+        if str(input4) in df.columns and str(input5) in df.columns and (input1 is None):
+
+            if (input2 is None) and (input3 is None):
+                fig = px.scatter_mapbox(df, lat=str(input4),lon=str(input5),template = plot_theme)
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+            if not (input2 is None) and (input3 is None):
+                fig = px.scatter_mapbox(df, lat=str(input4),lon=str(input5), color=str(input2),template = plot_theme)
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+
+            if (input2 is None) and not(input3 is None):
+                fig = px.scatter_mapbox(df, lat=str(input4),lon=str(input5), size=str(input3),template = plot_theme)
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+            if not (input2 is None) and not(input3 is None):
+                fig = px.scatter_mapbox(df, lat=str(input4),lon=str(input5), color=str(input2), size=str(input3),template = plot_theme)
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+
+        return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
+
+    @dash_app.callback(Output('output-state-map-density', 'children'),  
+              Input('submit-button-map-density', 'n_clicks'),
+              State('input-map-density-lat', 'value'),
+              State('input-map-density-lon', 'value'),
+              State('input-map-density-mag', 'value'),
+              State('input-map-density-radius', 'value'))
+    def update_mapdensityplot(n_clicks, input1, input2, input3, input4): 
+        if str(input1) in df.columns and str(input2) in df.columns:
+            if (input3 is None) and (input4 is None):
+                fig = px.density_mapbox(df, lat=str(input1), lon=str(input2), zoom=0, mapbox_style="stamen-terrain",template = plot_theme)
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+            if not (input3 is None) and (input4 is None):
+                fig = px.density_mapbox(df,  lat=str(input1), lon=str(input2), z=str(input3), zoom=0, mapbox_style="stamen-terrain",template = plot_theme)
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+
+            if (input3 is None) and not(input4 is None):
+                fig = px.density_mapbox(df, lat=str(input1), lon=str(input2), radius=float(input4), zoom=0, mapbox_style="stamen-terrain",template = plot_theme)
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+            if not (input3 is None) and not(input4 is None):
+                fig = px.density_mapbox(df, lat=str(input1), lon=str(input2), z=str(input3), radius=float(input4), zoom=0, mapbox_style="stamen-terrain",template = plot_theme)
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+        return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
+  
     return dash_app.server
 
 
