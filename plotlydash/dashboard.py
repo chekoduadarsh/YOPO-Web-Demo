@@ -25,7 +25,7 @@ def dashboard(server,  messages,dash_app):
 
     
     with server.test_request_context('/dashboard/'):
-       df = create_dataframe(json.loads(messages)["dataFrame"], server)
+        df = create_dataframe(json.loads(messages)["dataFrame"], server)
 
 
     dropdowns = []
@@ -68,15 +68,9 @@ def dashboard(server,  messages,dash_app):
                         {"label":"Expanding Mean", "value":"expanding"},]
     # Custom HTML layout
     dash_app.index_string = html_layout
-    card_icon = {
-        "color": "black",
-        "textAlign": "center",
-        "fontSize": 30,
-        "margin": "auto",
-    }
+
     # Create Layout
     dash_app.layout = html.Div([
-
     dcc.Tabs(id="tabs", value='tab-1',  children=[
 
         dcc.Tab(label='DataFrame View', value='tab-1' , style=tab_style, selected_style=tab_selected_style, children = [    

@@ -40,6 +40,9 @@ dash_app = dash.Dash(
     ],
     name='dash-app-1',
 )
+dash_app.config.suppress_callback_exceptions = True
+
+dash_app.validation_layout = html.Div()
 
 dash_app.layout = html.Div()
 
@@ -71,4 +74,3 @@ def index():
 
 if __name__ == '__main__':  
     server.run(host='0.0.0.0')
-
