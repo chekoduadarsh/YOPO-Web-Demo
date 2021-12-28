@@ -834,7 +834,6 @@ def dashboard(server,  messages,dash_app):
               State('input-candlestick-close', 'value'))
     def update_candlestick(n_clicks, input1, input2, input3, input4, input5): 
         if str(input1) in df.columns and str(input2) in df.columns and str(input3) in df.columns and str(input4) in df.columns and str(input5) in df.columns:
-            print("FIGURE")
             fig = go.Figure(data=[go.Candlestick(x=df[str(input1)],
                         open=df[str(input2)],
                         high=df[str(input3)],
@@ -855,7 +854,6 @@ def dashboard(server,  messages,dash_app):
               State('input-ohlc-close', 'value'))
     def update_candlestick(n_clicks, input1, input2, input3, input4, input5): 
         if str(input1) in df.columns and str(input2) in df.columns and str(input3) in df.columns and str(input4) in df.columns and str(input5) in df.columns:
-            print("FIGURE")
             fig = go.Figure(data=[go.Ohlc(x=df[str(input1)],
                         open=df[str(input2)],
                         high=df[str(input3)],
@@ -867,7 +865,7 @@ def dashboard(server,  messages,dash_app):
                     )
         return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
     
-    return dash_app
+    return dash_app.server
 
 
 

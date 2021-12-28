@@ -29,6 +29,22 @@ server.config['SECRET_KEY'] = SECRET_KEY
 # Flask-Bootstrap requires this line
 Bootstrap(server)
 
+dash_app = dash.Dash(
+    server=server,
+    routes_pathname_prefix='/dashboard/',
+    external_stylesheets=[
+        'https://fonts.googleapis.com/css?family=Lato',
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
+        'styles.css'#,'dropdown.css'
+    ],
+    name='CSV Visualizer',
+    title='CSV Visualizer'
+)
+dash_app.config.suppress_callback_exceptions = True
+
+dash_app.validation_layout = html.Div()
+
+dash_app.layout = html.Div()
 
 
 class NameForm(FlaskForm):
@@ -40,36 +56,21 @@ class NameForm(FlaskForm):
 def index():
     form = NameForm()
     message = ""
-    print("HERE!!")
     if form.validate_on_submit():
         name = form.name.data
         # empty the form field
         
         messages = json.dumps({"dataFrame":name})
         session['messages'] = messages
+        global dash_app
         global server
 
-        dash_app = dash.Dash(
-            server=server,
-            routes_pathname_prefix='/dashboard/',
-            external_stylesheets=[
-                'https://fonts.googleapis.com/css?family=Lato',
-                'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
-                'styles.css'#,'dropdown.css'
-            ],
-            name='dash-app-1',
-        )
-        dash_app.config.suppress_callback_exceptions = True
-
-        dash_app.validation_layout = html.Div()
-
-        dash_app.layout = html.Div()
 
         form.name.data = ""
         # redirect the browser to another route and template
 
         with server.test_request_context('/dashboard/'):
-            dash_app = dashboard(server, messages, dash_app)
+            server = dashboard(server, messages, dash_app)
         return redirect( url_for('/dashboard/' , id = messages))
     return render_template('index.html',  form=form, message=message)
 
