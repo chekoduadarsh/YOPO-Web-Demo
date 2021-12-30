@@ -56,6 +56,7 @@ class NameForm(FlaskForm):
 def index():
     form = NameForm()
     message = ""
+    global server
     if form.validate_on_submit():
         name = form.name.data
         # empty the form field
@@ -63,8 +64,6 @@ def index():
         messages = json.dumps({"dataFrame":name})
         session['messages'] = messages
         global dash_app
-        global server
-
 
         form.name.data = ""
         # redirect the browser to another route and template

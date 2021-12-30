@@ -11,8 +11,6 @@ import json
 from dash import html
 import dash_daq as daq
 from dash.dependencies import Input, Output, State
-import string
-import random
 import dash_trich_components as dtc
 from flask import Flask, render_template, redirect, url_for, session, request
 import urllib.parse
@@ -24,9 +22,7 @@ import plotly.graph_objects as go
 def dashboard(server,  messages,dash_app):
     """Create a Plotly Dash dashboard."""    
 
-    
-    with server.test_request_context('/dashboard/'):
-        df = create_dataframe(json.loads(messages)["dataFrame"], server)
+    df = create_dataframe(json.loads(messages)["dataFrame"], server)
 
 
     dropdowns = []
@@ -329,6 +325,28 @@ def dashboard(server,  messages,dash_app):
                  ]),
             ]),
         ]) ,  
+        dcc.Tab(label='Scientific Charts ', value='tab-sci' , style=tab_style, selected_style=tab_selected_style, children = [  
+             dcc.Tabs(id="tabs-sci", children=[    
+                dcc.Tab(label='Ternary Plots', value='tab-candlestick' , style=tab_style, selected_style=tab_selected_style, children = [   
+
+                    html.Div( id='input-ternary-mandatory', children = [  
+                    dcc.Dropdown(id='input-a-ternary', options=dropdowns, placeholder='Enter A corner Value'),
+                    dcc.Dropdown(id='input-b-ternary', options=dropdowns,placeholder='Enter B corner Value'),
+                    dcc.Dropdown(id='input-c-ternary', options=dropdowns,placeholder='Enter C corner Value'),
+                    ]),
+
+                    html.Div( id='input-ternary-not-mandatory', children = [                    
+                    dcc.Dropdown(id='input-color-ternary', options=dropdowns, placeholder='Enter Color axis Value'),
+                    dcc.Dropdown(id='input-size-ternary', options=dropdowns, placeholder='Enter Size axis Value'),
+                    ]),
+                
+
+                    html.Button(id='submit-button-ternary', n_clicks=0, children='Submit'),
+
+                    html.Div(id='output-state-ternary', children = []),
+                 ]),
+            ]),
+        ]) , 
         dcc.Tab(label='Trend Line', value='tab-trend' , style=tab_style, selected_style=tab_selected_style, children = [           
             dcc.Tabs(id="tabs-trend", children=[
                 dcc.Tab(label='Regressions', value='tab-8' , style=tab_style, selected_style=tab_selected_style, children = [   
@@ -852,7 +870,7 @@ def dashboard(server,  messages,dash_app):
               State('input-ohlc-high', 'value'),
               State('input-ohlc-low', 'value'),
               State('input-ohlc-close', 'value'))
-    def update_candlestick(n_clicks, input1, input2, input3, input4, input5): 
+    def update_ohlcstick(n_clicks, input1, input2, input3, input4, input5): 
         if str(input1) in df.columns and str(input2) in df.columns and str(input3) in df.columns and str(input4) in df.columns and str(input5) in df.columns:
             fig = go.Figure(data=[go.Ohlc(x=df[str(input1)],
                         open=df[str(input2)],
@@ -864,7 +882,47 @@ def dashboard(server,  messages,dash_app):
                         figure=fig
                     )
         return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
-    
+
+
+ 
+    @dash_app.callback(Output('output-state-ternary', 'children'),
+              Input('submit-button-ternary', 'n_clicks'),
+              State('input-a-ternary', 'value'),
+              State('input-b-ternary', 'value'),
+              State('input-c-ternary', 'value'),
+              State('input-color-ternary', 'value'),
+              State('input-size-ternary', 'value'))
+    def update_ternaryplot(n_clicks, input1, input2, input3, input4, input5): 
+        if str(input1) in df.columns and str(input2) in df.columns and str(input3) in df.columns:
+            if (input4 is None) and (input5 is None):
+                fig = px.scatter_ternary(df, a=str(input1), b=str(input2), c=str(input3),template = plot_theme)
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+            if (input4 is None) and not(input5 is None):
+                fig = px.scatter_ternary(df, a=str(input1), b=str(input2), c=str(input3), size=str(input5),template = plot_theme)
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )    
+
+            if not(input4 is None) and (input5 is None):
+                fig = px.scatter_ternary(df, a=str(input1), b=str(input2), c=str(input3), color=str(input4),template = plot_theme)
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+            if not(input4 is None) and not(input3 is None):
+                fig = px.scatter_ternary(df, a=str(input1), b=str(input2), c=str(input3), color=str(input4), size=str(input5),template = plot_theme)
+                return dcc.Graph(
+                        id='graph-1-tabs',
+                        figure=fig
+                    )
+
+        return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
+
+   
     return dash_app.server
 
 
