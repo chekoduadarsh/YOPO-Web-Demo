@@ -404,6 +404,14 @@ def dashboard(server,  messages,dash_app):
                 ]),
             ]),
         ]),
+        dcc.Tab(label='Custom Plots', value='tab-custom' , style=tab_style, selected_style=tab_selected_style, children = [         
+            html.Div( id='input-custom-mandatory', children = [  
+            dcc.Textarea(id='input-custom-code', placeholder="use variable 'df' as datta frame and export plotly figure to variable 'fig'", style={'width': '100%', 'height': 300}),
+            ]),
+            html.Button(id='submit-button-custom', n_clicks=0, children='Submit'),
+
+            html.Div(id='output-state-custom', children = []),
+        ]),
     ]),
     html.Div(id='tabs-content')
     ])  
@@ -1035,6 +1043,22 @@ def dashboard(server,  messages,dash_app):
                     id='graph-1-tabs',
                     figure=fig
                 )
+        return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
+
+
+    
+    @dash_app.callback(Output('output-state-custom', 'children'),
+              Input('submit-button-custom', 'n_clicks'),
+              State('input-custom-code', 'value'))
+    def update_customplot(n_clicks, input1): 
+        if not(input1 is None):
+            df
+            _locals = locals()
+            exec(input1, globals(),_locals)
+            return dcc.Graph(
+                    id='graph-1-tabs',
+                    figure=_locals["fig"]
+            )
         return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
 
     return dash_app.server
