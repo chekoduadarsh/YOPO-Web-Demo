@@ -15,7 +15,7 @@ import dash_trich_components as dtc
 from flask import Flask, render_template, redirect, url_for, session, request
 import urllib.parse
 import flask
-
+import dash_bootstrap_components as dbc
 import plotly.graph_objects as go
 
 
@@ -77,97 +77,109 @@ def dashboard(server,  messages,dash_app):
             dcc.Tabs(id="tabs-basic",  children=[
                 dcc.Tab(label='Scatter Plot', value='tab-2' , style=tab_style, selected_style=tab_selected_style, children = [
 
-                    html.Div( id='input-1', children = [  
+                    html.Div( id='input-scatter-mandatory', style = { "margin-left": "1%", "width":"48%", "display":"inline-block"}, children = [  
                     dcc.Dropdown(id='input-x-scatter', options=dropdowns, placeholder='Enter X axis Value'),
                     dcc.Dropdown(id='input-y-scatter', options=dropdowns,placeholder='Enter Y axis Value'),
+                    html.P("* Mandatory Inputs", style = {"color":"red"}),
                     ]),
 
-                    html.Div( id='input-2', children = [                    
+                    html.Div( id='input-scatter-not-mandatory',style = {"margin-left": "2%", "border-spacing":"2px",  "width":"48%", "display":"inline-block"}, children = [                    
                     dcc.Dropdown(id='input-color-scatter', options=dropdowns, placeholder='Enter Color axis Value'),
                     dcc.Dropdown(id='input-size-scatter', options=dropdowns, placeholder='Enter Size axis Value'),
+                    html.P("* Optional Inputs", style = {"color":"blue"}),
                     ]),
                 
+                    
+                    dbc.Button(id='submit-button-scatter',  color="success" ,n_clicks=0, children='Submit', style = {"margin-left": "1%",}),
 
-                    html.Button(id='submit-button-scatter', n_clicks=0, children='Submit'),
-
-                    html.Div(id='output-state-scatter', children = []),
+                    html.Div(id='output-state-scatter', children = [], style = {"margin-left": "1%",}),
                 ]),
 
                 dcc.Tab(label='Line Plot', value='tab-3' , style=tab_style, selected_style=tab_selected_style, children = [
 
-                    html.Div( id='input-3', children = [  
+                    html.Div( id='input-line-mandatory',style = { "margin-left": "1%", "width":"48%", "display":"inline-block"},  children = [  
                     dcc.Dropdown(id='input-x-line', options=dropdowns, placeholder='Enter X axis Value'),
                     dcc.Dropdown(id='input-y-line', options=dropdowns, placeholder='Enter Y axis Value'),
+                    html.P("* Mandatory Inputs", style = {"color":"red"}),
                     ]),
 
-                    html.Div( id='input-21', children = [                    
+                    html.Div( id='input-line-not-mandatory',style = {"margin-left": "2%", "border-spacing":"2px",  "width":"48%", "display":"inline-block"},  children = [                    
                     dcc.Dropdown(id='input-color-line', options=dropdowns, placeholder='Enter Color axis Value'),
+                    html.P("* Optional Inputs", style = {"color":"blue"}),
                     ]),
                 
 
-                    html.Button(id='submit-button-line', n_clicks=0, children='Submit'),
+                    dbc.Button(id='submit-button-line', n_clicks=0, children='Submit', color="success" ,style = {"margin-left": "1%",}),
 
-                    html.Div(id='output-state-line', children = []),
+                    html.Div(id='output-state-line', children = [],style = {"margin-left": "1%",}),
                 ]),
 
                 dcc.Tab(label='Bar Graph', value='tab-4' , style=tab_style, selected_style=tab_selected_style, children = [    
                     
-                    html.Div( id='input-4', children = [  
+                    html.Div( id='input-bar-mandatory',style = { "margin-left": "1%", "width":"48%", "display":"inline-block"}, children = [  
                     dcc.Dropdown(id='input-x-bar', options=dropdowns, placeholder='Enter X axis Value'),
                     dcc.Dropdown(id='input-y-bar', options=dropdowns, placeholder='Enter Y axis Value'),
+                    html.P("* Mandatory Inputs", style = {"color":"red"}),
                     ]),
-                    html.Div( id='input-22', children = [                    
+                    html.Div( id='input-bar-not-mandatory',style = {"margin-left": "2%", "border-spacing":"2px",  "width":"48%", "display":"inline-block"}, children = [                    
                     dcc.Dropdown(id='input-color-bar', options=dropdowns, placeholder='Enter Color axis Value'),
                     dcc.Dropdown(id='input-barmode-bar', options=barmode, placeholder='Enter BarMode'),
+                    html.P("* Optional Inputs", style = {"color":"blue"}),
                     ]),
 
-                    html.Button(id='submit-button-bar', n_clicks=0, children='Submit'),
+                    dbc.Button(id='submit-button-bar', n_clicks=0, children='Submit', color="success" ,style = {"margin-left": "1%",}),
 
-                    html.Div(id='output-state-bar', children = []),
+                    html.Div(id='output-state-bar', children = [],style = {"margin-left": "1%",}),
                 ]),
 
                 dcc.Tab(label='Pie Chart', value='tab-5' , style=tab_style, selected_style=tab_selected_style, children = [    
                     
-                    html.Div( id='input-5', children = [  
+                    html.Div( id='input-pie-mandatory',style = { "margin-left": "1%", "width":"48%", "display":"inline-block"}, children = [  
                     dcc.Dropdown(id='input-x-pie', options=dropdowns, placeholder='Enter X axis Value'),
+                    html.P("* Mandatory Inputs", style = {"color":"red"}),
                     ]),
-                    html.Div( id='input-23', children = [                    
+                    html.Div( id='input-pie-mandatory',style = {"margin-left": "2%", "border-spacing":"2px",  "width":"48%", "display":"inline-block"}, children = [                    
                     dcc.Dropdown(id='input-names-pie', options=dropdowns, placeholder='Enter names Value'),
+                    html.P("* Optional Inputs", style = {"color":"blue"}),
                     ]),
 
-                    html.Button(id='submit-button-pie', n_clicks=0, children='Submit'),
+                    dbc.Button(id='submit-button-pie', n_clicks=0, children='Submit', color="success" ,style = {"margin-left": "1%",}),
 
-                    html.Div(id='output-state-pie', children = []),
+                    html.Div(id='output-state-pie', children = [],style = {"margin-left": "1%",}),
                 ]),
 
                 dcc.Tab(label='Tree Map', value='tab-6' , style=tab_style, selected_style=tab_selected_style, children = [    
                     
-                    html.Div( id='input-6', children = [  
+                    html.Div( id='input-tree-mandatory',style = { "margin-left": "1%", "width":"48%", "display":"inline-block"},  children = [  
                     dcc.Dropdown(id='input-x-tree', options=dropdowns, placeholder='Enter Tree Path', multi=True),
                     dcc.Dropdown(id='input-value-tree', options=dropdowns, placeholder='Enter Value'),
+                    html.P("* Mandatory Inputs", style = {"color":"red"}),
                     ]),
-                    html.Div( id='input-24', children = [                    
+                    html.Div( id='input-tree-not-mandatory',style = {"margin-left": "2%", "border-spacing":"2px",  "width":"48%", "display":"inline-block"}, children = [                    
                     dcc.Dropdown(id='input-color-tree', options=dropdowns, placeholder='Enter Color Value'),
+                    html.P("* Optional Inputs", style = {"color":"blue"}),
                     ]),
 
-                    html.Button(id='submit-button-tree', n_clicks=0, children='Submit'),
+                    dbc.Button(id='submit-button-tree', n_clicks=0, children='Submit', color="success" ,style = {"margin-left": "1%",}),
 
-                    html.Div(id='output-state-tree', children = []),
+                    html.Div(id='output-state-tree', children = [], style = {"margin-left": "1%",}),
                 ]),
 
                 dcc.Tab(label='Sunburst Chart', value='tab-7' , style=tab_style, selected_style=tab_selected_style, children = [    
                     
-                    html.Div( id='input-7', children = [  
+                    html.Div( id='input-sunburst-mandatory',style = { "margin-left": "1%", "width":"48%", "display":"inline-block"}, children = [  
                     dcc.Dropdown(id='input-x-sun', options=dropdowns, placeholder='Enter Chart Path', multi=True),
                     dcc.Dropdown(id='input-value-sun', options=dropdowns, placeholder='Enter Value'),
+                    html.P("* Mandatory Inputs", style = {"color":"red"}),
                     ]),
-                    html.Div( id='input-25', children = [                    
+                    html.Div( id='input-sunburst-not-mandatory',style = {"margin-left": "2%", "border-spacing":"2px",  "width":"48%", "display":"inline-block"}, children = [                    
                     dcc.Dropdown(id='input-color-sun', options=dropdowns, placeholder='Enter Color Value'),
+                    html.P("* Optional Inputs", style = {"color":"blue"}),
                     ]),
 
-                    html.Button(id='submit-button-sun', n_clicks=0, children='Submit'),
+                    dbc.Button(id='submit-button-sun', n_clicks=0, children='Submit', color="success" ,style = {"margin-left": "1%",}),
 
-                    html.Div(id='output-state-sun', children = []),
+                    html.Div(id='output-state-sun', children = [], style = {"margin-left": "1%",}),
                 ]),
             ]),
         ]),
@@ -175,62 +187,70 @@ def dashboard(server,  messages,dash_app):
             dcc.Tabs(id="tabs-stat", children=[
                 dcc.Tab(label='Box Plot', value='tab-8' , style=tab_style, selected_style=tab_selected_style, children = [    
                     
-                    html.Div( id='input-8', children = [  
+                    html.Div( id='input-box-mandatory',style = { "margin-left": "1%", "width":"48%", "display":"inline-block"}, children = [  
                     dcc.Dropdown(id='input-x-box', options=dropdowns, placeholder='Enter X axis Value'),
                     dcc.Dropdown(id='input-y-box', options=dropdowns, placeholder='Enter Y axis Value'),
+                    html.P("* Mandatory Inputs", style = {"color":"red"}),
                     ]),
-                    html.Div( id='input-26', children = [                    
+                    html.Div( id='input-box-not-mandatory', style = {"margin-left": "2%", "border-spacing":"2px",  "width":"48%", "display":"inline-block"}, children = [                    
                     dcc.Dropdown(id='input-color-box', options=dropdowns, placeholder='Enter Color axis Value'),
+                    html.P("* Optional Inputs", style = {"color":"blue"}),
                     ]),
 
-                    html.Button(id='submit-button-box', n_clicks=0, children='Submit'),
+                    dbc.Button(id='submit-button-box', n_clicks=0, children='Submit', color="success" ,style = {"margin-left": "1%",}),
 
-                    html.Div(id='output-state-box', children = []),
+                    html.Div(id='output-state-box', children = [], style = {"margin-left": "1%",}),
                 ]),
 
                 dcc.Tab(label='Histogram', value='tab-9' , style=tab_style, selected_style=tab_selected_style, children = [    
                     
-                    html.Div( id='input-9', children = [  
+                    html.Div( id='input-hist-madatory',style = { "margin-left": "1%", "width":"48%", "display":"inline-block"}, children = [  
                     dcc.Dropdown(id='input-x-hist', options=dropdowns, placeholder='X axis value'),
+                    html.P("* Mandatory Inputs", style = {"color":"red"}),
                     ]),
-                    html.Div( id='input-27', children = [                    
+                    html.Div( id='input-hist-not-madatory', style = {"margin-left": "2%", "border-spacing":"2px",  "width":"48%", "display":"inline-block"}, children = [                    
                     dcc.Dropdown(id='input-color-hist', options=dropdowns, placeholder='Enter Color Value'),
+                    html.P("* Optional Inputs", style = {"color":"blue"}),
                     ]),
 
-                    html.Button(id='submit-button-hist', n_clicks=0, children='Submit'),
+                    dbc.Button(id='submit-button-hist', n_clicks=0, children='Submit', color="success" ,style = {"margin-left": "1%",}),
 
-                    html.Div(id='output-state-hist', children = []),
+                    html.Div(id='output-state-hist', children = [],style = {"margin-left": "1%",}),
                 ]),
 
 
                 dcc.Tab(label='HeatMap', value='tab-10' , style=tab_style, selected_style=tab_selected_style, children = [    
                     
-                    html.Div( id='input-10', children = [  
+                    html.Div( id='input-heatmap-mandatory',style = { "margin-left": "1%", "width":"48%", "display":"inline-block"}, children = [  
                     dcc.Dropdown(id='input-x-heat', options=dropdowns, placeholder='X axis value'),
                     dcc.Dropdown(id='input-y-heat', options=dropdowns, placeholder='Y axis value'),
+                    html.P("* Mandatory Inputs", style = {"color":"red"}),
                     ]),
-                    html.Div( id='input-28', children = [                    
+                    html.Div( id='input-heatmap-not-mandatory', style = {"margin-left": "2%", "border-spacing":"2px",  "width":"48%", "display":"inline-block"}, children = [                    
                     dcc.Dropdown(id='input-color-heat', options=dropdowns, placeholder='Enter Color Value'),
+                    html.P("* Optional Inputs", style = {"color":"blue"}),
                     ]),
 
-                    html.Button(id='submit-button-heat', n_clicks=0, children='Submit'),
+                    dbc.Button(id='submit-button-heat', n_clicks=0, children='Submit', color="success" ,style = {"margin-left": "1%",}),
 
-                    html.Div(id='output-state-heat', children = []),
+                    html.Div(id='output-state-heat', children = [],style = {"margin-left": "1%",}),
                 ]),
 
                 dcc.Tab(label='Violin Plot', value='tab-11' , style=tab_style, selected_style=tab_selected_style, children = [    
                     
-                    html.Div( id='input-11', children = [  
+                    html.Div( id='input-violin-mandatory',style = { "margin-left": "1%", "width":"48%", "display":"inline-block"}, children = [  
                     dcc.Dropdown(id='input-x-violin', options=dropdowns, placeholder='X axis value'),
                     dcc.Dropdown(id='input-y-violin', options=dropdowns, placeholder='Y axis value'),
+                    html.P("* Mandatory Inputs", style = {"color":"red"}),
                     ]),
-                    html.Div( id='input-29', children = [                    
+                    html.Div( id='input-violoin-not-mandatory', style = {"margin-left": "2%", "border-spacing":"2px",  "width":"48%", "display":"inline-block"}, children = [                    
                     dcc.Dropdown(id='input-color-violin', options=dropdowns, placeholder='Enter Color Value'),
+                    html.P("* Optional Inputs", style = {"color":"blue"}),
                     ]),
 
-                    html.Button(id='submit-button-violin', n_clicks=0, children='Submit'),
+                    dbc.Button(id='submit-button-violin', n_clicks=0, children='Submit', color="success" ,style = {"margin-left": "1%",}),
 
-                    html.Div(id='output-state-violin', children = []),
+                    html.Div(id='output-state-violin', children = [],style = {"margin-left": "1%",}),
                 ]),
             ]),
         ]),
@@ -242,53 +262,59 @@ def dashboard(server,  messages,dash_app):
                  #]),
                 dcc.Tab(label='Map Density Heatmap', value='tab-map-density' , style=tab_style, selected_style=tab_selected_style, children = [   
 
-                    html.Div( id='input-map-density-mandatory', children = [  
+                    html.Div( id='input-map-density-mandatory',style = { "margin-left": "1%", "width":"48%", "display":"inline-block"}, children = [  
                     dcc.Dropdown(id='input-map-density-lat', options=dropdowns, placeholder='Enter Latitude Value'),
                     dcc.Dropdown(id='input-map-density-lon', options=dropdowns, placeholder='Enter Longitude Value'),
+                    html.P("* Mandatory Inputs", style = {"color":"red"}),
                     ]),
 
-                    html.Div( id='input-map-density-not-mandatory', children = [  
+                    html.Div( id='input-map-density-not-mandatory', style = {"margin-left": "2%", "border-spacing":"2px",  "width":"48%", "display":"inline-block"}, children = [  
                     dcc.Dropdown(id='input-map-density-mag', options=dropdowns, placeholder='Enter Magnitude Value'),
-                    dcc.Input(id='input-map-density-radius', placeholder='Enter radius Value')
+                    dcc.Input(id='input-map-density-radius', placeholder='Enter radius Value'),
+                    html.P("* Optional Inputs", style = {"color":"blue"}),
                     ]),
 
-                    html.Button(id='submit-button-map-density', n_clicks=0, children='Submit'),
+                    dbc.Button(id='submit-button-map-density', n_clicks=0, children='Submit', color="success" ,style = {"margin-left": "1%",}),
 
-                    html.Div(id='output-state-map-density', children = []),
+                    html.Div(id='output-state-map-density', children = [],style = {"margin-left": "1%",}),
 
 
                  ]),
                 dcc.Tab(label='Line on Maps Heatmap', value='tab-map-line' , style=tab_style, selected_style=tab_selected_style, children = [   
 
-                    html.Div( id='input-map-line-mandatory', children = [  
-                    dcc.Dropdown(id='input-map-line-location', options=dropdowns, placeholder='Enter Loaction Value')
+                    html.Div( id='input-map-line-mandatory',style = { "margin-left": "1%", "width":"48%", "display":"inline-block"}, children= [  
+                    dcc.Dropdown(id='input-map-line-location', options=dropdowns, placeholder='Enter Loaction Value'),
+                    html.P("* Mandatory Inputs", style = {"color":"red"}),
                     ]),
 
-                    html.Div( id='input-map-line-not-mandatory', children = [  
-                    dcc.Dropdown(id='input-map-line-color', options=dropdowns, placeholder='Enter Color Value')
+                    html.Div( id='input-map-line-not-mandatory', style = {"margin-left": "2%", "border-spacing":"2px",  "width":"48%", "display":"inline-block"}, children = [  
+                    dcc.Dropdown(id='input-map-line-color', options=dropdowns, placeholder='Enter Color Value'),
+                    html.P("* Optional Inputs", style = {"color":"blue"}),
                     ]),
 
-                    html.Button(id='submit-button-map-line', n_clicks=0, children='Submit'),
+                    dbc.Button(id='submit-button-map-line', n_clicks=0, children='Submit', color="success" ,style = {"margin-left": "1%",}),
 
-                    html.Div(id='output-state-map-line', children = []),
+                    html.Div(id='output-state-map-line', children = [],style = {"margin-left": "1%",}),
 
                  ]),
                 dcc.Tab(label='Scatterplot on Maps', value='tab-map-scatter' , style=tab_style, selected_style=tab_selected_style, children = [   
 
-                    html.Div( id='input-map-scatter-mandatory', children = [  
+                    html.Div( id='input-map-scatter-mandatory',style = { "margin-left": "1%", "width":"48%", "display":"inline-block"}, children= [  
                     dcc.Dropdown(id='input-map-scatter-location', options=dropdowns, placeholder='Enter Loaction Value'),
+                    html.P("* Mandatory Inputs", style = {"color":"red"}),
                     #dcc.Dropdown(id='input-map-scatter-lat', options=dropdowns, placeholder='Enter Latitude Value'),
                     #dcc.Dropdown(id='input-map-scatter-lon', options=dropdowns, placeholder='Enter Longitude Value'), #disabled due to mapbox token
                     ]),
 
-                    html.Div( id='input-map-scatter-not-mandatory', children = [  
+                    html.Div( id='input-map-scatter-not-mandatory', style = {"margin-left": "2%", "border-spacing":"2px",  "width":"48%", "display":"inline-block"}, children = [  
                     dcc.Dropdown(id='input-map-scatter-color', options=dropdowns, placeholder='Enter Color Value'),
-                    dcc.Dropdown(id='input-map-scatter-size', options=dropdowns, placeholder='Enter Size Value')
+                    dcc.Dropdown(id='input-map-scatter-size', options=dropdowns, placeholder='Enter Size Value'),
+                    html.P("* Optional Inputs", style = {"color":"blue"}),
                     ]),
 
-                    html.Button(id='submit-button-map-scatter', n_clicks=0, children='Submit'),
+                    dbc.Button(id='submit-button-map-scatter', n_clicks=0, children='Submit', color="success" ,style = {"margin-left": "1%",}),
 
-                    html.Div(id='output-state-map-scatter', children = []),
+                    html.Div(id='output-state-map-scatter', children = [],style = {"margin-left": "1%",}),
 
                  ]),
              ]),
@@ -297,31 +323,33 @@ def dashboard(server,  messages,dash_app):
              dcc.Tabs(id="tabs-fin", children=[    
                 dcc.Tab(label='Candlestick Chart', value='tab-candlestick' , style=tab_style, selected_style=tab_selected_style, children = [   
 
-                    html.Div( id='input-candlestick-mandatory', children = [  
+                    html.Div( id='input-candlestick-mandatory',style = { "margin-left": "1%", "width":"48%", "display":"inline-block"}, children= [  
                     dcc.Dropdown(id='input-candlestick-date', options=dropdowns, placeholder='Enter Date Value'),
                     dcc.Dropdown(id='input-candlestick-open', options=dropdowns, placeholder='Enter Open Value'),
                     dcc.Dropdown(id='input-candlestick-high', options=dropdowns, placeholder='Enter High Value'),
                     dcc.Dropdown(id='input-candlestick-low', options=dropdowns, placeholder='Enter Low Value'),
                     dcc.Dropdown(id='input-candlestick-close', options=dropdowns, placeholder='Enter Close Value'),
+                    html.P("* Mandatory Inputs", style = {"color":"red"}),
                     ]),
 
-                    html.Button(id='submit-button-candlestick', n_clicks=0, children='Submit'),
+                    dbc.Button(id='submit-button-candlestick', n_clicks=0, children='Submit', color="success" ,style = {"margin-left": "1%",}),
 
-                    html.Div(id='output-state-candlestick', children = []),
+                    html.Div(id='output-state-candlestick', children = [],style = {"margin-left": "1%",}),
                  ]),
                  dcc.Tab(label='OHLC Chart', value='tab-ohlc' , style=tab_style, selected_style=tab_selected_style, children = [   
 
-                    html.Div( id='input-ohlc-mandatory', children = [  
+                    html.Div( id='input-ohlc-mandatory',style = { "margin-left": "1%", "width":"48%", "display":"inline-block"}, children= [  
                     dcc.Dropdown(id='input-ohlc-date', options=dropdowns, placeholder='Enter Date Value'),
                     dcc.Dropdown(id='input-ohlc-open', options=dropdowns, placeholder='Enter Open Value'),
                     dcc.Dropdown(id='input-ohlc-high', options=dropdowns, placeholder='Enter High Value'),
                     dcc.Dropdown(id='input-ohlc-low', options=dropdowns, placeholder='Enter Low Value'),
                     dcc.Dropdown(id='input-ohlc-close', options=dropdowns, placeholder='Enter Close Value'),
+                    html.P("* Mandatory Inputs", style = {"color":"red"}),
                     ]),
 
-                    html.Button(id='submit-button-ohlc', n_clicks=0, children='Submit'),
+                    dbc.Button(id='submit-button-ohlc', n_clicks=0, children='Submit', color="success" ,style = {"margin-left": "1%",}),
 
-                    html.Div(id='output-state-ohlc', children = []),
+                    html.Div(id='output-state-ohlc', children = [],style = {"margin-left": "1%",}),
                  ]),
             ]),
         ]) ,  
@@ -329,55 +357,60 @@ def dashboard(server,  messages,dash_app):
              dcc.Tabs(id="tabs-sci", children=[    
                 dcc.Tab(label='Ternary Plots', value='tab-ternary' , style=tab_style, selected_style=tab_selected_style, children = [   
 
-                    html.Div( id='input-ternary-mandatory', children = [  
+                    html.Div( id='input-ternary-mandatory',style = { "margin-left": "1%", "width":"48%", "display":"inline-block"}, children= [  
                     dcc.Dropdown(id='input-a-ternary', options=dropdowns, placeholder='Enter A corner Value'),
                     dcc.Dropdown(id='input-b-ternary', options=dropdowns,placeholder='Enter B corner Value'),
                     dcc.Dropdown(id='input-c-ternary', options=dropdowns,placeholder='Enter C corner Value'),
+                    html.P("* Mandatory Inputs", style = {"color":"red"}),
                     ]),
 
-                    html.Div( id='input-ternary-not-mandatory', children = [                    
+                    html.Div( id='input-ternary-not-mandatory', style = {"margin-left": "2%", "border-spacing":"2px",  "width":"48%", "display":"inline-block"}, children = [                    
                     dcc.Dropdown(id='input-color-ternary', options=dropdowns, placeholder='Enter Color Value'),
                     dcc.Dropdown(id='input-size-ternary', options=dropdowns, placeholder='Enter Size Value'),
+                    html.P("* Optional Inputs", style = {"color":"blue"}),
                     ]),
                 
 
-                    html.Button(id='submit-button-ternary', n_clicks=0, children='Submit'),
+                    dbc.Button(id='submit-button-ternary', n_clicks=0, children='Submit', color="success" ,style = {"margin-left": "1%",}),
 
-                    html.Div(id='output-state-ternary', children = []),
+                    html.Div(id='output-state-ternary', children = [],style = {"margin-left": "1%",}),
                  ]),
                 dcc.Tab(label='Polar Charts', value='tab-polar' , style=tab_style, selected_style=tab_selected_style, children = [   
 
-                    html.Div( id='input-polar-mandatory', children = [  
+                    html.Div( id='input-polar-mandatory',style = { "margin-left": "1%", "width":"48%", "display":"inline-block"}, children= [  
                     dcc.Dropdown(id='input-r-polar', options=dropdowns, placeholder='Enter R Value'),
                     dcc.Dropdown(id='input-theta-polar', options=dropdowns,placeholder='Enter Theta Value'),
+                    html.P("* Mandatory Inputs", style = {"color":"red"}),
                     ]),
 
-                    html.Div( id='input-polar-not-mandatory', children = [                    
+                    html.Div( id='input-polar-not-mandatory', style = {"margin-left": "2%", "border-spacing":"2px",  "width":"48%", "display":"inline-block"}, children = [                    
                     dcc.Dropdown(id='input-color-polar', options=dropdowns, placeholder='Enter Color Value'),
                     dcc.Dropdown(id='input-size-polar', options=dropdowns, placeholder='Enter Size Value'),
                     dcc.Dropdown(id='input-symbol-polar', options=dropdowns, placeholder='Enter Symbol Value'),
+                    html.P("* Optional Inputs", style = {"color":"blue"}),
                     ]),
                 
 
-                    html.Button(id='submit-button-polar', n_clicks=0, children='Submit'),
+                    dbc.Button(id='submit-button-polar', n_clicks=0, children='Submit', color="success" ,style = {"margin-left": "1%",}),
 
-                    html.Div(id='output-state-polar', children = []),
+                    html.Div(id='output-state-polar', children = [],style = {"margin-left": "1%",}),
                  ]),
                 dcc.Tab(label='Streamtube', value='tab-streamtube' , style=tab_style, selected_style=tab_selected_style, children = [   
 
-                    html.Div( id='input-streamtube-mandatory', children = [  
+                    html.Div( id='input-streamtube-mandatory',style = { "margin-left": "1%", "width":"48%", "display":"inline-block"}, children= [  
                     dcc.Dropdown(id='input-x-streamtube', options=dropdowns, placeholder='Enter X Value'),
                     dcc.Dropdown(id='input-y-streamtube', options=dropdowns,placeholder='Enter Y Value'),                                  
                     dcc.Dropdown(id='input-z-streamtube', options=dropdowns, placeholder='Enter Z Value'),
                     dcc.Dropdown(id='input-u-streamtube', options=dropdowns, placeholder='Enter U Value'),
                     dcc.Dropdown(id='input-v-streamtube', options=dropdowns, placeholder='Enter V Value'),
                     dcc.Dropdown(id='input-w-streamtube', options=dropdowns, placeholder='Enter W Value'),
+                    html.P("* Mandatory Inputs", style = {"color":"red"}),
                     ]),
                 
 
-                    html.Button(id='submit-button-streamtube', n_clicks=0, children='Submit'),
+                    dbc.Button(id='submit-button-streamtube', n_clicks=0, children='Submit', color="success" ,style = {"margin-left": "1%",}),
 
-                    html.Div(id='output-state-streamtube', children = []),
+                    html.Div(id='output-state-streamtube', children = [],style = {"margin-left": "1%",}),
                  ]),
             ]),
         ]) , 
@@ -389,28 +422,30 @@ def dashboard(server,  messages,dash_app):
                     dcc.Dropdown(id='input-x-regscatter', options=dropdowns, placeholder='Enter X axis Value'),
                     dcc.Dropdown(id='input-y-regscatter', options=dropdowns, placeholder='Enter Y axis Value'),
                     dcc.Dropdown(id='input-reg-regscatter', options=regressioon_Algos, placeholder='Enter Regression Algorithmm'),
+                    html.P("* Mandatory Inputs", style = {"color":"red"}),
                     ]),
 
                     html.Div( id='input-20', children = [                    
                     dcc.Dropdown(id='input-color-regscatter', options=dropdowns, placeholder='Enter Color axis Value'),
                     dcc.Dropdown(id='input-size-regscatter', options=dropdowns, placeholder='Enter Size axis Value'),
+                    html.P("* Optional Inputs", style = {"color":"blue"}),
                     ]),
                 
 
-                    html.Button(id='submit-button-regscatter', n_clicks=0, children='Submit'),
+                    dbc.Button(id='submit-button-regscatter', n_clicks=0, children='Submit', color="success" ,style = {"margin-left": "1%",}),
 
-                    html.Div(id='output-state-regscatter', children = []),
+                    html.Div(id='output-state-regscatter', children = [],style = {"margin-left": "1%",}),
 
                 ]),
             ]),
         ]),
         dcc.Tab(label='Custom Plots', value='tab-custom' , style=tab_style, selected_style=tab_selected_style, children = [         
-            html.Div( id='input-custom-mandatory', children = [  
+            html.Div( id='input-custom-mandatory',children= [  
             dcc.Textarea(id='input-custom-code', placeholder="use variable 'df' as datta frame and export plotly figure to variable 'fig'", style={'width': '100%', 'height': 300}),
             ]),
-            html.Button(id='submit-button-custom', n_clicks=0, children='Submit'),
+            dbc.Button(id='submit-button-custom', n_clicks=0, children='Submit', color="success" ,style = {"margin-left": "1%",}),
 
-            html.Div(id='output-state-custom', children = []),
+            html.Div(id='output-state-custom', children = [],style = {"margin-left": "1%",}),
         ]),
     ]),
     html.Div(id='tabs-content')
