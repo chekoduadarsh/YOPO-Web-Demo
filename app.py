@@ -21,12 +21,6 @@ server = Flask(__name__)
 SECRET_KEY = os.urandom(32)
 server.config['SECRET_KEY'] = SECRET_KEY
 
-
-
-# Flask-WTF requires an encryption key - the string can be anything
-#server.config['SECRET_KEY'] = 'C2HWGVoMGfNTBsrYQg8EcMrdTimkZfAb'
-
-# Flask-Bootstrap requires this line
 Bootstrap(server)
 
 dash_app = dash.Dash(

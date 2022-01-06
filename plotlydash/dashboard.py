@@ -23,11 +23,7 @@ def dashboard(server,  messages,dash_app):
     """Create a Plotly Dash dashboard."""    
 
     df = create_dataframe(json.loads(messages)["dataFrame"], server)
-
-
     dropdowns = []
-
-
     plot_theme = "plotly_dark"
     tab_style = {
         'borderBottom': '1px solid #d6d6d6',
@@ -529,8 +525,6 @@ def dashboard(server,  messages,dash_app):
 
         return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
 
-
-
     @dash_app.callback(Output('output-state-bar', 'children'),  
               Input('submit-button-bar', 'n_clicks'),
               State('input-x-bar', 'value'),
@@ -622,8 +616,7 @@ def dashboard(server,  messages,dash_app):
                         )
 
         return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
-
-    
+   
     @dash_app.callback(Output('output-state-sun', 'children'),  
               Input('submit-button-sun', 'n_clicks'),
               State('input-x-sun', 'value'),
@@ -658,7 +651,6 @@ def dashboard(server,  messages,dash_app):
                         )
 
         return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
-
 
     @dash_app.callback(Output('output-state-box', 'children'),  
               Input('submit-button-box', 'n_clicks'),
@@ -705,7 +697,6 @@ def dashboard(server,  messages,dash_app):
 
         return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
 
-  
     @dash_app.callback(Output('output-state-heat', 'children'),  
               Input('submit-button-heat', 'n_clicks'),
               State('input-x-heat', 'value'),
@@ -730,7 +721,6 @@ def dashboard(server,  messages,dash_app):
 
         return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
    
-     
     @dash_app.callback(Output('output-state-violin', 'children'),  
               Input('submit-button-violin', 'n_clicks'),
               State('input-x-violin', 'value'),
@@ -764,7 +754,6 @@ def dashboard(server,  messages,dash_app):
                                 figure=fig
                             )                                                                                                             
         return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
-   
 
     @dash_app.callback(Output('output-state-regscatter', 'children'),
               Input('submit-button-regscatter', 'n_clicks'),
@@ -803,7 +792,6 @@ def dashboard(server,  messages,dash_app):
 
         return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
 
-    
     @dash_app.callback(Output('output-state-map-line', 'children'),  
               Input('submit-button-map-line', 'n_clicks'),
               State('input-map-line-location', 'value'),
@@ -824,7 +812,6 @@ def dashboard(server,  messages,dash_app):
                     )
         return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
 
-    
     @dash_app.callback(Output('output-state-map-scatter', 'children'),  
               Input('submit-button-map-scatter', 'n_clicks'),
               State('input-map-scatter-location', 'value'),
@@ -965,8 +952,6 @@ def dashboard(server,  messages,dash_app):
                     )
         return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
 
-
- 
     @dash_app.callback(Output('output-state-ternary', 'children'),
               Input('submit-button-ternary', 'n_clicks'),
               State('input-a-ternary', 'value'),
@@ -1003,7 +988,6 @@ def dashboard(server,  messages,dash_app):
                     )
 
         return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
-
   
     @dash_app.callback(Output('output-state-polar', 'children'),
               Input('submit-button-polar', 'n_clicks'),
@@ -1067,7 +1051,6 @@ def dashboard(server,  messages,dash_app):
 
         return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
 
-    
     @dash_app.callback(Output('output-state-streamtube', 'children'),
               Input('submit-button-streamtube', 'n_clicks'),
               State('input-x-streamtube', 'value'),
@@ -1084,9 +1067,7 @@ def dashboard(server,  messages,dash_app):
                     figure=fig
                 )
         return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
-
-
-    
+ 
     @dash_app.callback(Output('output-state-custom', 'children'),
               Input('submit-button-custom', 'n_clicks'),
               State('input-custom-code', 'value'))
