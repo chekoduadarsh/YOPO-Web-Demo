@@ -256,7 +256,7 @@ def dashboard(server,  messages,dash_app):
             ]),
         ]),
         dcc.Tab(label='Geological Plots', value='tab-geo' , style=tab_style, selected_style=tab_selected_style, children = [  
-             dcc.Tabs(id="tabs-stat", children=[    
+             dcc.Tabs(id="geo-stat", children=[    
                  #dcc.Tab(label='Map Choropleth Plot', value='tab-map-choropleth' , style=tab_style, selected_style=tab_selected_style, children = [   
 
 
@@ -451,7 +451,6 @@ def dashboard(server,  messages,dash_app):
     ]),
     html.Div(id='tabs-content')
     ])  
-
     @dash_app.callback(Output('output-state-scatter', 'children'),
               Input('submit-button-scatter', 'n_clicks'),
               State('input-x-scatter', 'value'),
