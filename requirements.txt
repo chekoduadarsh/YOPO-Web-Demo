@@ -4,6 +4,7 @@ certifi==2021.10.8
 click==8.0.3
 cycler
 dash==2.0.0
+dash_bootstrap_components
 dash-core-components==2.0.0
 dash-html-components==2.0.0
 dash-renderer==1.1.2
