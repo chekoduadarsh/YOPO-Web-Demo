@@ -9,12 +9,9 @@ from .layout import html_layout
 import plotly.express as px
 import json 
 from dash import html
-import dash_daq as daq
 from dash.dependencies import Input, Output, State
 import dash_trich_components as dtc
 from flask import Flask, render_template, redirect, url_for, session, request
-import urllib.parse
-import flask
 import dash_bootstrap_components as dbc
 import plotly.graph_objects as go
 
