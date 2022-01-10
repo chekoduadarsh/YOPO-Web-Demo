@@ -4,7 +4,7 @@ import json
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 from plotlydash.dashboard import dashboard
-
+import flask
 import dash_bootstrap_components as dbc
 import dash
 from dash import dcc
@@ -15,7 +15,11 @@ import string
 import os
 import random
 
+
+server = flask.Flask(__name__) 
+
 dash_app = dash.Dash(
+    server=server,
     routes_pathname_prefix='/',
     external_stylesheets=[
         'https://fonts.googleapis.com/css?family=Lato',
@@ -36,4 +40,4 @@ dash_app = dashboard(dash_app)
 
 
 if __name__ == '__main__':  
-    dash_app.run_server(port="8080")
+    server.run()
