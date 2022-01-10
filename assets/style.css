@@ -1,5 +1,7 @@
 /* colors variables settings */
-
+h1{
+    text-align:center;
+  }
 :root {
     --bgColor: #fff;
   	--textDefault: #000;
@@ -22,12 +24,11 @@ body {
     color: var(--textDefault);
   }
   
-  h2 {
-      color: var(--primary);
-  }
-  
-  .classNameExample {
-      background: var(--terciary);
-      border: 1px solid var(--secondary);
-  }
+h2 {
+    text-align:center;
+}
 
+.classNameExample {
+    background: var(--terciary);
+    border: 1px solid var(--secondary);
+}

@@ -24,9 +24,12 @@ CSV Visualizer
 
       <p class="lead">This is a Flask + Dash web app which can be used to visualize any CSV!!</p>
 
-      {{ wtf.quick_form(form) }}
-
-      <p class="pt-5"><strong>{{ message }}</strong></p>
+      <form method="post">
+        <input name="df_url" size="80%"></input>
+        </br>
+        </br>
+        <input class="btn btn-primary" type="submit">
+      </form>
 
     </div>
   </div>
