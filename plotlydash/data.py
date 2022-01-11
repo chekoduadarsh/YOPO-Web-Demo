@@ -8,6 +8,7 @@ def create_dataframe(message):
     df = pd.DataFrame()
     if message != "":
         df = pd.read_csv(message)
+        df = df.head(50) # reducing Data Load Running on Heroku Free !!!!
         if len(df) == 0:
             return pd.DataFrame()
 
