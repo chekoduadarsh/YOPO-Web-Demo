@@ -19,7 +19,6 @@ import plotly.graph_objects as go
 def dashboard(dash_app, df = px.data.iris()):
     """Create a Plotly Dash dashboard."""    
 
-    #df = px.data.iris() # df = pd.DataFrame()
     print("SETTING INTI")
     dropdowns = {}
     plot_theme = "plotly_dark"
@@ -81,11 +80,8 @@ def dashboard(dash_app, df = px.data.iris()):
               Input('submit-button-search-field', 'n_clicks'),
               State('input-search-field', 'value'))
     def update_dfplot(n_clicks, input1): 
-        print("Update Called")
         if not(input1 is None):
             df, dropdowns = create_dataframe(input1)
-            #dash_app = dashboard(dash_app, df)
-            print(len(df))
             return dashboard_layout(dash_app, df,dropdowns)
         return dashboard_layout(dash_app)
 

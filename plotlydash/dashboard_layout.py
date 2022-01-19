@@ -52,7 +52,7 @@ regressioon_Algos = [{"label":"Ordinary least squares", "value":"ols"},
 
 def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
 
-    layout =     html.Div( id='all-contents-div',style = only_mandatory_div_style, children= [
+    layout = html.Div( id='all-contents-div',style = only_mandatory_div_style, children= [
 
     dcc.Tabs(id="tabs", value='tab-1',  children=[
 
