@@ -1184,6 +1184,7 @@ def create_data_table(df):
         id='database-table',
         columns=[{"name": i, "id": i} for i in df.columns],
         data=df.to_dict('records'),
+        style_cell={'textAlign': 'center'},
         sort_action="native",
         sort_mode='native',
         page_size=300
