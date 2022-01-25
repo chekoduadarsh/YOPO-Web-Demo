@@ -16,6 +16,9 @@ from flask import Flask, render_template, redirect, url_for, session, request
 import dash_bootstrap_components as dbc
 import plotly.graph_objects as go
 
+import dash_trich_components as dtc
+
+
 def dashboard(dash_app, df = px.data.iris()):
     """Create a Plotly Dash dashboard."""    
 
@@ -44,8 +47,8 @@ def dashboard(dash_app, df = px.data.iris()):
         'padding': '6px'
     }
 
-    searchbar_div_style = { "margin-left": "20%", "width":"48%", "margin-right": "1%","display":"inline-grid"}
-    left_indent_style = {"margin-left": "1%",}
+    searchbar_div_style = { "marginLeft": "20%", "width":"48%", " marginRight": "1%","display":"inline-grid"}
+    left_indent_style = {"marginLeft": "1%",}
 
     
 
@@ -71,7 +74,7 @@ def dashboard(dash_app, df = px.data.iris()):
         ]),
         dbc.Button(id='submit-button-search-field',  color="primary", n_clicks=0, children='Submit Query',  className="me-1"),
         html.P(" "),
-        html.Div(id='update-content', className="container", style={"margin-up": "15px"}, children = [
+        html.Div(id='update-content', className="container", style={"marginUp": "15px"}, children = [
         dashboard_layout(dash_app)  
     ]),
     ])
@@ -96,7 +99,6 @@ def create_data_table(df):
         columns=[{"name": i, "id": i} for i in df.columns],
         data=df.to_dict('records'),
         sort_action="native",
-        sort_mode='native',
         page_size=300
         
     )

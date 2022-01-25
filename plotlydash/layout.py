@@ -13,7 +13,6 @@ html_layout = """
         <body class="dash-template">
             <header>
               <div class="nav-wrapper">
-
               <nav class="navbar navbar-light bg-light">
                     <h3>You Only Plot Once - GUI Demo</h3>
                    <a href="https://github.com/chekoduadarsh/YOPO-You-Only-Plot-Once"><i class="fa fa-github" style="font-size:48px;color:black"></i></a>
@@ -34,6 +33,7 @@ html_layout = """
                 {%config%}
                 {%scripts%}
                 {%renderer%}
+
             </footer>
         </body>
     </html>

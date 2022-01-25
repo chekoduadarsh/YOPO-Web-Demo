@@ -2,7 +2,7 @@
 h1{
     text-align:center;
   }
-:root {
+  :root {
     --bgColor: #fff;
   	--textDefault: #000;
     --primary: #0B4CFF;
@@ -10,15 +10,13 @@ h1{
     --terciary: #00BA5B;
 }
 
-/* 	--textDefault: #fff;*/
-
 :root[data-theme='dark'] {
-	--bgColor: #000;
+  	--bgColor: #000;
+  	--textDefault: #fff;
     --primary: #ACC2FF;
     --secondary: #FFAFD0;
     --terciary: #86E1B3;
-}/* colors variables using examples */
-
+}
 body {
     background: var(--bgColor);
     color: var(--textDefault);

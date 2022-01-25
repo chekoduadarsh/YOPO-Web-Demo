@@ -16,14 +16,18 @@ import os
 import random
 
 
-server = flask.Flask(__name__) 
 
 dash_app = dash.Dash(
-    server=server,
     routes_pathname_prefix='/',
+    external_scripts=[
+        'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.js',
+        'custom-script.js'
+    ],
     external_stylesheets=[
         'https://fonts.googleapis.com/css?family=Lato',
         'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
+        'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/theme/monokai.min.css',
+        'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.css',
         'styles.css',
         dbc.themes.BOOTSTRAP
     ],
@@ -40,4 +44,4 @@ dash_app = dashboard(dash_app)
 
 
 if __name__ == '__main__':  
-    server.run()
+    dash_app.run_server(debug=True)

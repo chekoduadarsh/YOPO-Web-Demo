@@ -36,10 +36,10 @@ tab_selected_style = {
 
 not_mandatory_font_style = {"color":"blue"}
 mandatory_font_style = {"color":"red"}
-mandatory_div_style = { "margin-left": "1%", "width":"48%", "display":"inline-grid"}
-only_mandatory_div_style = { "margin-left": "1%", "width":"98%", "margin-right": "1%","display":"inline-grid"}
-not_mandatory_div_style = {"margin-left": "2%", "border-spacing":"2px",  "width":"48%", "display":"inline-grid"}
-left_indent_style = {"margin-left": "1%",}
+mandatory_div_style = { " marginLeft": "1%", "width":"48%", "display":"inline-grid"}
+only_mandatory_div_style = { " marginLeft": "1%", "width":"98%", " marginRight": "1%","display":"inline-grid"}
+not_mandatory_div_style = {" marginLeft": "2%", "border-spacing":"2px",  "width":"48%", "display":"inline-grid"}
+left_indent_style = {" marginLeft": "1%",}
 
 
 barmode = [{"label":"stack", "value":"stack"},{"label":"group", "value":"group"}]
@@ -445,8 +445,9 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
             ]),
         ]),
         dcc.Tab(label='Custom Plots', value='tab-custom' , style=tab_style, selected_style=tab_selected_style, children = [         
+            
             html.Div( id='input-custom-mandatory',children= [  
-            dcc.Textarea(id='input-custom-code', placeholder="use variable 'df' as datta frame and export plotly figure to variable 'fig'", style={"margin-left": "1%", "width":"98%", "margin-right": "1%", 'height': 300}),
+                dcc.Textarea(id='input-custom-code', placeholder="use variable 'df' as datta frame and export plotly figure to variable 'fig'", style={" marginLeft": "1%", "width":"98%", " marginRight": "1%", 'height': 300}),
             ]),
             dbc.Button(id='submit-button-custom', n_clicks=0, children='Submit', color="success" ,style = left_indent_style),
 
@@ -1178,6 +1179,7 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
 
     return layout
 
+
 def create_data_table(df):
     """Create Dash datatable from Pandas DataFrame."""
     table = dash_table.DataTable(
@@ -1186,7 +1188,6 @@ def create_data_table(df):
         data=df.to_dict('records'),
         style_cell={'textAlign': 'center'},
         sort_action="native",
-        sort_mode='native',
         page_size=300
         
     )
