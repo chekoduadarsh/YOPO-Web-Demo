@@ -16,7 +16,6 @@ from flask import Flask, render_template, redirect, url_for, session, request
 import dash_bootstrap_components as dbc
 import plotly.graph_objects as go
 
-import dash_trich_components as dtc
 
 
 def dashboard(dash_app, df = px.data.iris()):
