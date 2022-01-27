@@ -17,8 +17,11 @@ import random
 
 
 
+
+server = Flask(__name__)
 dash_app = dash.Dash(
     routes_pathname_prefix='/',
+    server=server,
     external_scripts=[
         'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.js',
         'custom-script.js'
@@ -44,4 +47,4 @@ dash_app = dashboard(dash_app)
 
 
 if __name__ == '__main__':  
-    dash_app.run_server(debug=True)
+    server.run()

@@ -21,7 +21,6 @@ import plotly.graph_objects as go
 def dashboard(dash_app, df = px.data.iris()):
     """Create a Plotly Dash dashboard."""    
 
-    print("SETTING INTI")
     dropdowns = {}
     plot_theme = "plotly_dark"
     tab_style = {
