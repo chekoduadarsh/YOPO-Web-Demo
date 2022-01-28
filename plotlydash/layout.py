@@ -13,10 +13,14 @@ html_layout = """
         <body class="dash-template">
             <header>
               <div class="nav-wrapper">
-              <nav class="navbar navbar-light bg-light">
+              <nav class="navbar navbar-light bg-light" >
                     <h3>You Only Plot Once - GUI Demo</h3>
-                   <a href="https://github.com/chekoduadarsh/YOPO-You-Only-Plot-Once"><i class="fa fa-github" style="font-size:48px;color:black"></i></a>
-                </a>
+                <li class="nav navbar-nav navbar-right">
+                <ul>
+                   <a href="https://colab.research.google.com/github/chekoduadarsh/YOPO-You-Only-Plot-Once/blob/master/example.ipynb" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Colaboratory_SVG_Logo.svg" width="48px" height="48px"></a>
+                    &nbsp;
+                   <a href="https://github.com/chekoduadarsh/YOPO-You-Only-Plot-Once" target="_blank"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="48px" height="48px"></a>
+                </ul>
               </nav>
                 </br>
                     <h2>CSV Visualizer</h2>
