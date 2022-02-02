@@ -1,4 +1,4 @@
-# CSV-Visualizer
+# YOPO Demo
 
 # :warning: Work in Progress
-CSV Visualizer is a universal Plotting tool where you can plung in the online link to the CSV and visualize all the relations possible. This tool is developed with FLask and Dash. Flask serving as a server and Dash serving as an application.
+YOPO is an **~0 Code** interactive dashboard which generates various standard plots.you can create various graphs and charts with a click of a button. This tool uses Dash and Flask in backend.
