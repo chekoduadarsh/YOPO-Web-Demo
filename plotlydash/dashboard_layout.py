@@ -3,7 +3,7 @@ from dash import dash_table
 from dash import dcc
 import plotly.express as px
 import json 
-from dash import html
+from dash import html, dcc
 from dash.dependencies import Input, Output, State
 from flask import Flask, render_template, redirect, url_for, session, request
 import dash_bootstrap_components as dbc
@@ -78,7 +78,11 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
                     
                     dbc.Button(id='submit-button-scatter',  color="success" ,n_clicks=0, children='Submit', style = left_indent_style),
 
-                    html.Div(id='output-state-scatter', children = [], style = left_indent_style),
+                    dcc.Loading(
+                        id="loading-scatter",
+                        type="default",
+                        children=html.Div(id='output-state-scatter', children = [], style = left_indent_style),
+                    ),
                 ]),
 
                 dcc.Tab(label='Line Plot', value='tab-3' , style=tab_style, selected_style=tab_selected_style, children = [
@@ -98,7 +102,11 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
 
                     dbc.Button(id='submit-button-line', n_clicks=0, children='Submit', color="success" ,style = left_indent_style),
 
-                    html.Div(id='output-state-line', children = [],style = left_indent_style),
+                    dcc.Loading(
+                        id="loading-line",
+                        type="default",
+                        children=html.Div(id='output-state-line', children = [],style = left_indent_style),
+                       ),
                 ]),
 
                 dcc.Tab(label='Bar Graph', value='tab-4' , style=tab_style, selected_style=tab_selected_style, children = [    
@@ -116,7 +124,11 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
 
                     dbc.Button(id='submit-button-bar', n_clicks=0, children='Submit', color="success" ,style = left_indent_style),
 
-                    html.Div(id='output-state-bar', children = [],style = left_indent_style),
+                    dcc.Loading(
+                        id="loading-bar",
+                        type="default",
+                        children=html.Div(id='output-state-bar', children = [],style = left_indent_style),
+            ),
                 ]),
 
                dcc.Tab(label='Pie Chart', value='tab-pie' , style=tab_style, selected_style=tab_selected_style, children = [    
@@ -132,7 +144,11 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
 
                     dbc.Button(id='submit-button-pie', n_clicks=0, children='Submit', color="success" ,style = left_indent_style),
 
-                    html.Div(id='output-state-pie', children = [], style = left_indent_style),
+                    dcc.Loading(
+                        id="loading-pie",
+                        type="default",
+                        children=html.Div(id='output-state-pie', children = [], style = left_indent_style),
+            ),
                 ]),
                 dcc.Tab(label='Tree Map', value='tab-6' , style=tab_style, selected_style=tab_selected_style, children = [    
                     
@@ -148,7 +164,11 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
 
                     dbc.Button(id='submit-button-tree', n_clicks=0, children='Submit', color="success" ,style = left_indent_style),
 
-                    html.Div(id='output-state-tree', children = [], style = left_indent_style),
+                    dcc.Loading(
+                        id="loading-tree",
+                        type="default",
+                        children=html.Div(id='output-state-tree', children = [], style = left_indent_style),
+            ),
                 ]),
 
                 dcc.Tab(label='Sunburst Chart', value='tab-7' , style=tab_style, selected_style=tab_selected_style, children = [    
@@ -165,7 +185,11 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
 
                     dbc.Button(id='submit-button-sun', n_clicks=0, children='Submit', color="success" ,style = left_indent_style),
 
-                    html.Div(id='output-state-sun', children = [], style = left_indent_style),
+                    dcc.Loading(
+                        id="loading-sun",
+                        type="default",
+                        children=html.Div(id='output-state-sun', children = [], style = left_indent_style),
+            ),
                 ]),
             ]),
         ]),
@@ -185,7 +209,11 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
 
                     dbc.Button(id='submit-button-box', n_clicks=0, children='Submit', color="success" ,style = left_indent_style),
 
-                    html.Div(id='output-state-box', children = [], style = left_indent_style),
+                    dcc.Loading(
+                        id="loading-box",
+                        type="default",
+                        children=html.Div(id='output-state-box', children = [], style = left_indent_style),
+            ),
                 ]),
 
                 dcc.Tab(label='Histogram', value='tab-9' , style=tab_style, selected_style=tab_selected_style, children = [    
@@ -201,7 +229,11 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
 
                     dbc.Button(id='submit-button-hist', n_clicks=0, children='Submit', color="success" ,style = left_indent_style),
 
-                    html.Div(id='output-state-hist', children = [],style = left_indent_style),
+                    dcc.Loading(
+                        id="loading-hist",
+                        type="default",
+                        children=html.Div(id='output-state-hist', children = [],style = left_indent_style),
+            ),
                 ]),
 
                 dcc.Tab(label='Area Plot', value='tab-area' , style=tab_style, selected_style=tab_selected_style, children = [
@@ -221,7 +253,11 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
 
                     dbc.Button(id='submit-button-area', n_clicks=0, children='Submit', color="success" ,style = left_indent_style),
 
-                    html.Div(id='output-state-area', children = [],style = left_indent_style),
+                    dcc.Loading(
+                        id="loading-area",
+                        type="default",
+                        children=html.Div(id='output-state-area', children = [],style = left_indent_style),
+            ),
                 ]),
 
                 dcc.Tab(label='HeatMap', value='tab-10' , style=tab_style, selected_style=tab_selected_style, children = [    
@@ -238,7 +274,11 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
 
                     dbc.Button(id='submit-button-heat', n_clicks=0, children='Submit', color="success" ,style = left_indent_style),
 
-                    html.Div(id='output-state-heat', children = [],style = left_indent_style),
+                    dcc.Loading(
+                        id="loading-heat",
+                        type="default",
+                        children=html.Div(id='output-state-heat', children = [],style = left_indent_style),
+            ),
                 ]),
 
                 dcc.Tab(label='Violin Plot', value='tab-11' , style=tab_style, selected_style=tab_selected_style, children = [    
@@ -255,7 +295,11 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
 
                     dbc.Button(id='submit-button-violin', n_clicks=0, children='Submit', color="success" ,style = left_indent_style),
 
-                    html.Div(id='output-state-violin', children = [],style = left_indent_style),
+                    dcc.Loading(
+                        id="loading-violin",
+                        type="default",
+                        children=html.Div(id='output-state-violin', children = [],style = left_indent_style),
+            ),
                 ]),
             ]),
         ]),
@@ -281,7 +325,11 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
 
                     dbc.Button(id='submit-button-map-density', n_clicks=0, children='Submit', color="success" ,style = left_indent_style),
 
-                    html.Div(id='output-state-map-density', children = [],style = left_indent_style),
+                    dcc.Loading(
+                        id="loading-map-density",
+                        type="default",
+                        children=html.Div(id='output-state-map-density', children = [],style = left_indent_style),
+            ),
 
 
                  ]),
@@ -299,7 +347,11 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
 
                     dbc.Button(id='submit-button-map-line', n_clicks=0, children='Submit', color="success" ,style = left_indent_style),
 
-                    html.Div(id='output-state-map-line', children = [],style = left_indent_style),
+                    dcc.Loading(
+                        id="loading-map-line",
+                        type="default",
+                        children=html.Div(id='output-state-map-line', children = [],style = left_indent_style),
+            ),
 
                  ]),
                 dcc.Tab(label='Scatterplot on Maps', value='tab-map-scatter' , style=tab_style, selected_style=tab_selected_style, children = [   
@@ -319,7 +371,11 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
 
                     dbc.Button(id='submit-button-map-scatter', n_clicks=0, children='Submit', color="success" ,style = left_indent_style),
 
-                    html.Div(id='output-state-map-scatter', children = [],style = left_indent_style),
+                    dcc.Loading(
+                        id="loading-map-scatter",
+                        type="default",
+                        children=html.Div(id='output-state-map-scatter', children = [],style = left_indent_style),
+            ),
 
                  ]),
              ]),
@@ -339,7 +395,11 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
 
                     dbc.Button(id='submit-button-candlestick', n_clicks=0, children='Submit', color="success" ,style = left_indent_style),
 
-                    html.Div(id='output-state-candlestick', children = [],style = left_indent_style),
+                    dcc.Loading(
+                        id="loading-candlestick",
+                        type="default",
+                        children=html.Div(id='output-state-candlestick', children = [],style = left_indent_style),
+            ),
                  ]),
                  dcc.Tab(label='OHLC Chart', value='tab-ohlc' , style=tab_style, selected_style=tab_selected_style, children = [   
 
@@ -354,7 +414,11 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
 
                     dbc.Button(id='submit-button-ohlc', n_clicks=0, children='Submit', color="success" ,style = left_indent_style),
 
-                    html.Div(id='output-state-ohlc', children = [],style = left_indent_style),
+                    dcc.Loading(
+                        id="loading-ohlc",
+                        type="default",
+                        children=html.Div(id='output-state-ohlc', children = [],style = left_indent_style),
+            ),
                  ]),
             ]),
         ]) ,  
@@ -378,7 +442,11 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
 
                     dbc.Button(id='submit-button-ternary', n_clicks=0, children='Submit', color="success" ,style = left_indent_style),
 
-                    html.Div(id='output-state-ternary', children = [],style = left_indent_style),
+                    dcc.Loading(
+                        id="loading-ternary",
+                        type="default",
+                        children=html.Div(id='output-state-ternary', children = [],style = left_indent_style),
+            ),
                  ]),
                 dcc.Tab(label='Polar Charts', value='tab-polar' , style=tab_style, selected_style=tab_selected_style, children = [   
 
@@ -398,7 +466,11 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
 
                     dbc.Button(id='submit-button-polar', n_clicks=0, children='Submit', color="success" ,style = left_indent_style),
 
-                    html.Div(id='output-state-polar', children = [],style = left_indent_style),
+                    dcc.Loading(
+                        id="loading-polar",
+                        type="default",
+                        children=html.Div(id='output-state-polar', children = [],style = left_indent_style),
+            ),
                  ]),
                 dcc.Tab(label='Streamtube', value='tab-streamtube' , style=tab_style, selected_style=tab_selected_style, children = [   
 
@@ -415,7 +487,11 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
 
                     dbc.Button(id='submit-button-streamtube', n_clicks=0, children='Submit', color="success" ,style = left_indent_style),
 
-                    html.Div(id='output-state-streamtube', children = [],style = left_indent_style),
+                    dcc.Loading(
+                        id="loading-streamtube",
+                        type="default",
+                        children=html.Div(id='output-state-streamtube', children = [],style = left_indent_style),
+            ),
                  ]),
             ]),
         ]) , 
@@ -439,7 +515,11 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
 
                     dbc.Button(id='submit-button-regscatter', n_clicks=0, children='Submit', color="success" ,style = left_indent_style),
 
-                    html.Div(id='output-state-regscatter', children = [],style = left_indent_style),
+                    dcc.Loading(
+                        id="loading-regscatter",
+                        type="default",
+                        children=html.Div(id='output-state-regscatter', children = [],style = left_indent_style),
+                      ),  
 
                 ]),
             ]),
@@ -451,7 +531,11 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
             ]),
             dbc.Button(id='submit-button-custom', n_clicks=0, children='Submit', color="success" ,style = left_indent_style),
 
-            html.Div(id='output-state-custom', children = [],style = left_indent_style),
+            dcc.Loading(
+                        id="loading-custom",
+                        type="default",
+                        children=html.Div(id='output-state-custom', children = [],style = left_indent_style),
+            ),
         ]),
     ]),
     html.Div(id='tabs-content')
