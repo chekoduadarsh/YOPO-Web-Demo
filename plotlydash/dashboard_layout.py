@@ -279,7 +279,7 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
                     html.P("* Mandatory Inputs",style = mandatory_font_style),
                     ]),
                     html.Div( id='input-heatmap-not-mandatory', style = not_mandatory_div_style, children = [                    
-                    dcc.Dropdown(id='input-color-heat', options=dropdowns, placeholder='Enter Color Value'),
+                    dcc.Dropdown(id='input-color-heat', options=dropdowns, placeholder='Enter Z Value'),
                     dcc.Input(id='input-other-heat',placeholder='Enter Other parameters'),
                     html.P("* Optional Inputs", style = not_mandatory_font_style),
                     ]),
@@ -579,10 +579,10 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
     def update_scatterplot(n_clicks, input1, input2, input3, input4, input5): 
         if strNoneConvert(input1) in df.columns and strNoneConvert(input2) in df.columns:
 
-            input_parametes = { "x":noneconvert(input1),
-                                "y":noneconvert(input2),
-                                "color":noneconvert(input3),
-                                "size":noneconvert(input4),
+            input_parametes = { "x": strNoneConvert(input1),
+                                "y": strNoneConvert(input2),
+                                "color": strNoneConvert(input3),
+                                "size": strNoneConvert(input4),
                                 "template":plot_theme}
             input_parametes.update(otherinputtodict(input5))
             
@@ -608,10 +608,10 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
         input4 = None
         if strNoneConvert(input1) in df.columns and strNoneConvert(input2) in df.columns:
 
-            input_parametes = { "x":noneconvert(input1),
-                    "y":noneconvert(input2),
-                    "color":noneconvert(input3),
-                    "line_group":noneconvert(input4),
+            input_parametes = { "x": strNoneConvert(input1),
+                    "y": strNoneConvert(input2),
+                    "color": strNoneConvert(input3),
+                    "line_group": strNoneConvert(input4),
                     "template":plot_theme}
 
             input_parametes.update(otherinputtodict(input5))
@@ -619,7 +619,7 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
 
             fig = px.line(df, **input_parametes)
             return dcc.Graph(
-                    id='graph-1-tabs',
+                    id='graph-line-tabs',
                     figure=fig
                 )
         return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
@@ -635,10 +635,10 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
         if strNoneConvert(input1) in df.columns and strNoneConvert(input2) in df.columns:
 
 
-            input_parametes = { "x":noneconvert(input1),
-                    "y":noneconvert(input2),
-                    "color":noneconvert(input3),
-                    "barmode":noneconvert(input4),
+            input_parametes = { "x": strNoneConvert(input1),
+                    "y": strNoneConvert(input2),
+                    "color": strNoneConvert(input3),
+                    "barmode": strNoneConvert(input4),
                     "template":plot_theme}
 
             input_parametes.update(otherinputtodict(input5))
@@ -646,7 +646,7 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
 
             fig = px.bar(df, **input_parametes)
             return dcc.Graph(
-                    id='graph-1-tabs',
+                    id='graph-bar-tabs',
                     figure=fig
                 )
 
@@ -662,15 +662,15 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
         if strNoneConvert(input1) in df.columns:
             
 
-            input_parametes = { "values":noneconvert(input1),
-                    "names":noneconvert(input2),
+            input_parametes = { "values": strNoneConvert(input1),
+                    "names": strNoneConvert(input2),
                     "template":plot_theme}
 
             input_parametes.update(otherinputtodict(input3))
 
             fig = px.pie(df, **input_parametes)
             return dcc.Graph(
-                    id='graph-1-tabs',
+                    id='graph-pie-tabs',
                     figure=fig
                 )
         return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
@@ -684,15 +684,15 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
     def update_treeplot(n_clicks, input1, input2, input3, input4): 
         if not input1 is None:
             if set(input1).issubset(df.columns):
-                input_parametes = { "color":noneconvert(input2),
-                    "values":noneconvert(input3),
+                input_parametes = { "color": strNoneConvert(input2),
+                    "values": strNoneConvert(input3),
                     "template":plot_theme}
 
                 input_parametes.update(otherinputtodict(input4))
 
                 fig = px.treemap(df, path = input1, **input_parametes)
                 return dcc.Graph(
-                        id='graph-1-tabs',
+                        id='graph-tree-tabs',
                         figure=fig
                     )
 
@@ -709,15 +709,15 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
             if set(input1).issubset(df.columns):
 
                 input_parametes = {
-                    "color":noneconvert(input2),
-                    "values":noneconvert(input3),
+                    "color": strNoneConvert(input2),
+                    "values": strNoneConvert(input3),
                     "template":plot_theme}
 
                 input_parametes.update(otherinputtodict(input4))
 
                 fig = px.sunburst(df, path = input1, **input_parametes)
                 return dcc.Graph(
-                        id='graph-1-tabs',
+                        id='graph-sun-tabs',
                         figure=fig
                     )
 
@@ -732,16 +732,16 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
     def update_barplot(n_clicks, input1, input2, input3, input4): 
         if strNoneConvert(input1) in df.columns and strNoneConvert(input2) in df.columns:
 
-            input_parametes = { "x":noneconvert(input1),
-                                "y":noneconvert(input2),
-                                "color":noneconvert(input3),
+            input_parametes = { "x": strNoneConvert(input1),
+                                "y": strNoneConvert(input2),
+                                "color": strNoneConvert(input3),
                                 "template":plot_theme}
             input_parametes.update(otherinputtodict(input4))
             
 
             fig = px.box(df, **input_parametes)
             return dcc.Graph(
-                    id='graph-1-tabs',
+                    id='graph-box-tabs',
                     figure=fig
                 )    
 
@@ -756,15 +756,15 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
         if not input1 is None:
             if input1 in df.columns:
 
-                input_parametes = { "x":noneconvert(input1),
-                        "color":noneconvert(input2),
+                input_parametes = { "x": strNoneConvert(input1),
+                        "color": strNoneConvert(input2),
                         "template":plot_theme}
 
                 input_parametes.update(otherinputtodict(input3))
 
                 fig = px.histogram(df, **input_parametes)
                 return dcc.Graph(
-                        id='graph-1-tabs',
+                        id='graph-hist-tabs',
                         figure=fig
                     )
 
@@ -781,16 +781,16 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
         input4 = None
         if strNoneConvert(input1) in df.columns and strNoneConvert(input2) in df.columns:
 
-            input_parametes = { "x":noneconvert(input1),
-                                "y":noneconvert(input2),
-                                "color":noneconvert(input3),
-                                "line_group":noneconvert(input4),
+            input_parametes = { "x": strNoneConvert(input1),
+                                "y": strNoneConvert(input2),
+                                "color": strNoneConvert(input3),
+                                "line_group": strNoneConvert(input4),
                                 "template":plot_theme}
             input_parametes.update(otherinputtodict(input5))
 
             fig = px.area(df, **input_parametes)
             return dcc.Graph(
-                    id='graph-1-tabs',
+                    id='graph-area-tabs',
                     figure=fig
                 )
         return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
@@ -805,15 +805,15 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
         if not(input1 is None) and not(input2 is None):
             if strNoneConvert(input1) in df.columns and strNoneConvert(input2) in df.columns:
 
-                input_parametes = { "x":noneconvert(input1),
-                                "y":noneconvert(input2),
-                                "z":noneconvert(input3),
+                input_parametes = { "x": strNoneConvert(input1),
+                                "y": strNoneConvert(input2),
+                                "z": strNoneConvert(input3),
                                 "template":plot_theme}
                 input_parametes.update(otherinputtodict(input4))
 
                 fig = px.density_heatmap(df, **input_parametes)
                 return dcc.Graph(
-                        id='graph-1-tabs',
+                        id='graph-heat-tabs',
                         figure=fig
                     )    
 
@@ -829,15 +829,15 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
         if not(input1 is None):
             if strNoneConvert(input1) in df.columns:
 
-                input_parametes = { "x":noneconvert(input2),
-                                "y":noneconvert(input1),
-                                "color":noneconvert(input3),
+                input_parametes = { "x": strNoneConvert(input2),
+                                "y": strNoneConvert(input1),
+                                "color": strNoneConvert(input3),
                                 "template":plot_theme}
                 input_parametes.update(otherinputtodict(input4))
 
                 fig = px.violin(df, **input_parametes)
                 return dcc.Graph(
-                        id='graph-1-tabs',
+                        id='graph-violin-tabs',
                         figure=fig
                     )                                                                                                             
         return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
@@ -853,11 +853,11 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
     def update_regscatterplot(n_clicks, input1, input2, input3, input4, input5, input6): 
         if strNoneConvert(input1) in df.columns and strNoneConvert(input2) in df.columns:
 
-            input_parametes = { "x":noneconvert(input1),
-                                "y":noneconvert(input2),
-                                "color":noneconvert(input3),
-                                "size":noneconvert(input4),
-                                "trendline":noneconvert(input5),
+            input_parametes = { "x": strNoneConvert(input1),
+                                "y": strNoneConvert(input2),
+                                "color": strNoneConvert(input3),
+                                "size": strNoneConvert(input4),
+                                "trendline": strNoneConvert(input5),
                                 "template":plot_theme}
             input_parametes.update(otherinputtodict(input6))
 
@@ -878,14 +878,14 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
     def update_maplineplot(n_clicks, input1, input2, input3): 
         if strNoneConvert(input1) in df.columns:
 
-            input_parametes = { "locations":noneconvert(input1),
-                                "color":noneconvert(input2),
+            input_parametes = { "locations": strNoneConvert(input1),
+                                "color": strNoneConvert(input2),
                                 "template":plot_theme}
             input_parametes.update(otherinputtodict(input3))
 
             fig = px.line_geo(df, **input_parametes)
             return dcc.Graph(
-                    id='graph-1-tabs',
+                    id='graph-map-line-tabs',
                     figure=fig
                 )
         return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
@@ -910,9 +910,9 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
     def update_mapdensityplot(n_clicks, input1, input2, input3, input4, input5): 
         if strNoneConvert(input1) in df.columns and strNoneConvert(input2) in df.columns:
 
-            input_parametes = { "lat":noneconvert(input1),
-                                "lon":noneconvert(input2),
-                                "z":noneconvert(input3),
+            input_parametes = { "lat": strNoneConvert(input1),
+                                "lon": strNoneConvert(input2),
+                                "z": strNoneConvert(input3),
                                 "radius":floatNoneConvert(input4),
                                 "zoom":0,
                                 "mapbox_style":"stamen-terrain",
@@ -921,7 +921,7 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
 
             fig = px.density_mapbox(df, **input_parametes)
             return dcc.Graph(
-                    id='graph-1-tabs',
+                    id='graph-map-density-tabs',
                     figure=fig
                 )
         return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
@@ -938,17 +938,17 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
         if strNoneConvert(input1) in df.columns and strNoneConvert(input2) in df.columns and strNoneConvert(input3) in df.columns and strNoneConvert(input4) in df.columns and strNoneConvert(input5) in df.columns:
             
             
-            input_parametes = { "x":df[noneconvert(input1)],
-                                "open":df[noneconvert(input2)],
-                                "high":df[noneconvert(input3)],
-                                "low":df[noneconvert(input4)],
-                                "close":df[noneconvert(input5)]}
+            input_parametes = { "x":df[ strNoneConvert(input1)],
+                                "open":df[ strNoneConvert(input2)],
+                                "high":df[ strNoneConvert(input3)],
+                                "low":df[ strNoneConvert(input4)],
+                                "close":df[ strNoneConvert(input5)]}
             input_parametes.update(otherinputtodict(input6))
             
             
             fig = go.Figure(data=[go.Candlestick(**input_parametes)])
             return dcc.Graph(
-                        id='graph-1-tabs',
+                        id='graph-candlestick-tabs',
                         figure=fig
                     )
         return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
@@ -965,16 +965,16 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
         if strNoneConvert(input1) in df.columns and strNoneConvert(input2) in df.columns and strNoneConvert(input3) in df.columns and strNoneConvert(input4) in df.columns and strNoneConvert(input5) in df.columns:
             
           
-            input_parametes = { "x":df[noneconvert(input1)],
-                                "open":df[noneconvert(input2)],
-                                "high":df[noneconvert(input3)],
-                                "low":df[noneconvert(input4)],
-                                "close":df[noneconvert(input5)]}
+            input_parametes = { "x":df[ strNoneConvert(input1)],
+                                "open":df[ strNoneConvert(input2)],
+                                "high":df[ strNoneConvert(input3)],
+                                "low":df[ strNoneConvert(input4)],
+                                "close":df[ strNoneConvert(input5)]}
             input_parametes.update(otherinputtodict(input6))
 
             fig = go.Figure(data=[go.Ohlc(**input_parametes)])
             return dcc.Graph(
-                        id='graph-1-tabs',
+                        id='graph-ohlc-tabs',
                         figure=fig
                     )
         return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
@@ -990,17 +990,17 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
         if strNoneConvert(input1) in df.columns and strNoneConvert(input2) in df.columns and strNoneConvert(input3) in df.columns:
 
                         
-            input_parametes = { "a":noneconvert(input1),
-                                "b":noneconvert(input2),
-                                "c":noneconvert(input3),
-                                "color":noneconvert(input4),
-                                "size":noneconvert(input5),
+            input_parametes = { "a": strNoneConvert(input1),
+                                "b": strNoneConvert(input2),
+                                "c": strNoneConvert(input3),
+                                "color": strNoneConvert(input4),
+                                "size": strNoneConvert(input5),
                                 "template":plot_theme}
             input_parametes.update(otherinputtodict(input6))
 
             fig = px.scatter_ternary(df, **input_parametes)
             return dcc.Graph(
-                    id='graph-1-tabs',
+                    id='graph-ternary-tabs',
                     figure=fig
                 )
         return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
@@ -1016,17 +1016,17 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
     def update_polarplot(n_clicks, input1, input2, input3, input4, input5, input6): 
         if strNoneConvert(input1) in df.columns and strNoneConvert(input2) in df.columns:
                         
-            input_parametes = { "r":noneconvert(input1),
-                                "theta":noneconvert(input2),
-                                "color":noneconvert(input3),
-                                "size":noneconvert(input4),
-                                "symbol":noneconvert(input5),
+            input_parametes = { "r": strNoneConvert(input1),
+                                "theta": strNoneConvert(input2),
+                                "color": strNoneConvert(input3),
+                                "size": strNoneConvert(input4),
+                                "symbol": strNoneConvert(input5),
                                 "template":plot_theme}
             input_parametes.update(otherinputtodict(input6))
 
             fig = px.scatter_polar(df, **input_parametes)
             return dcc.Graph(
-                    id='graph-1-tabs',
+                    id='graph-polar-tabs',
                     figure=fig
                 )
 
@@ -1042,7 +1042,7 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
               State('input-w-streamtube', 'value'),
               State('input-other-streamtube', 'value'))
     def update_streamtubeplot(n_clicks, input1, input2, input3, input4, input5, input6, input7): 
-        if strNoneConvert(input1) in df.columns and strNoneConvert(input2) in df.columns and strnoneconvert(input3) in df.columns and strNoneConvert(input4) in df.columns and strNoneConvert(input5) in df.columns and strNoneConvert(input6) in df.columns:
+        if strNoneConvert(input1) in df.columns and strNoneConvert(input2) in df.columns and strNoneConvert(input3) in df.columns and strNoneConvert(input4) in df.columns and strNoneConvert(input5) in df.columns and strNoneConvert(input6) in df.columns:
             
             input_parametes = { "x":df[input1],
                                 "y":df[input2],
@@ -1056,7 +1056,7 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
             
             fig = go.Figure(data=go.Streamtube(**input_parametes))
             return dcc.Graph(
-                    id='graph-1-tabs',
+                    id='graph-streamtube-tabs',
                     figure=fig
                 )
         return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
@@ -1070,7 +1070,7 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
             _locals = locals()
             exec(input1, globals(),_locals)
             return dcc.Graph(
-                    id='graph-1-tabs',
+                    id='graph-custom-code-tabs',
                     figure=_locals["fig"]
             )
         return  "Fill the required fields and click on 'Submit' to generate the graph you want!!"
