@@ -11,7 +11,7 @@ def create_dataframe(message):
         df = df.sample(n = 50, random_state = 2) # reducing Data Load Running on Heroku Free !!!!
         if len(df) == 0:
             return pd.DataFrame()
-        df["Index"] = df.index
+        df.insert(0,"Index", df.index)
         for column in df.columns:
             dropdowns.append({"label":column, "value":column})
     return df, dropdowns
