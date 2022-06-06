@@ -12,7 +12,6 @@ import plotly.graph_objects as go
 from .util import floatNoneConvert, strNoneConvert, otherinputtodict
 
 plot_theme = "plotly_dark"
-plotly_color_continuous_scale = "inferno"
 tab_style = {
     'borderBottom': '1px solid #d6d6d6',
     'padding': '6px',
@@ -743,6 +742,20 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
                                       children=[], style=left_indent_style),
                 ),
             ]),
+                dcc.Tab(label='Hybrid Plots', value='tab-hybrid', style=tab_style, selected_style=tab_selected_style, children=[
+
+                dcc.Dropdown(
+                    id='hybrid-plots', options=[{"label":"bar", "value":"bar"},{"label":"line", "value":"line"},{"label":"hist", "value":"hist"}], multi=True),
+                
+                dbc.Button(id='submit-button-hybrid', n_clicks=0,
+                           children='Submit', color="success", style=left_indent_style),
+                dcc.Loading(
+                    id="loading-hybrid",
+                    type="default",
+                    children=html.Div(id='output-state-hybrid',
+                                      children=[], style=left_indent_style),
+                ),
+            ]),
         ]),
         html.Div(id='tabs-content')
     ])
@@ -762,7 +775,7 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
                                "color": strNoneConvert(input3),
                                "size": strNoneConvert(input4),
                                "template": plot_theme, 
-                               "color_continuous_scale": plotly_color_continuous_scale}
+                               }
             input_parametes.update(otherinputtodict(input5))
 
             fig = px.scatter(df, **input_parametes)
@@ -788,8 +801,7 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
                                "y": strNoneConvert(input2),
                                "color": strNoneConvert(input3),
                                "line_group": strNoneConvert(input4),
-                               "template": plot_theme, 
-                               "color_continuous_scale": plotly_color_continuous_scale}
+                               "template": plot_theme}
 
             input_parametes.update(otherinputtodict(input5))
 
@@ -815,7 +827,7 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
                                "color": strNoneConvert(input3),
                                "barmode": strNoneConvert(input4),
                                "template": plot_theme,
-                               "color_continuous_scale": plotly_color_continuous_scale}
+                               }
 
             input_parametes.update(otherinputtodict(input5))
 
@@ -839,7 +851,7 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
             input_parametes = {"values": strNoneConvert(input1),
                                "names": strNoneConvert(input2),
                                "template": plot_theme,
-                               "color_continuous_scale": plotly_color_continuous_scale}
+                               }
 
             input_parametes.update(otherinputtodict(input3))
 
@@ -862,7 +874,7 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
                 input_parametes = {"color": strNoneConvert(input2),
                                    "values": strNoneConvert(input3),
                                    "template": plot_theme,
-                                   "color_continuous_scale": plotly_color_continuous_scale}
+                                   }
 
                 input_parametes.update(otherinputtodict(input4))
 
@@ -888,7 +900,7 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
                     "color": strNoneConvert(input2),
                     "values": strNoneConvert(input3),
                     "template": plot_theme,
-                    "color_continuous_scale": plotly_color_continuous_scale}
+                    }
 
                 input_parametes.update(otherinputtodict(input4))
 
@@ -906,14 +918,14 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
                        State('input-y-box', 'value'),
                        State('input-color-box', 'value'),
                        State('input-other-box', 'value'))
-    def update_barplot(n_clicks, input1, input2, input3, input4):
+    def update_boxplot(n_clicks, input1, input2, input3, input4):
         if strNoneConvert(input1) in df.columns and strNoneConvert(input2) in df.columns:
 
             input_parametes = {"x": strNoneConvert(input1),
                                "y": strNoneConvert(input2),
                                "color": strNoneConvert(input3),
                                "template": plot_theme,
-                               "color_continuous_scale": plotly_color_continuous_scale}
+                               }
             input_parametes.update(otherinputtodict(input4))
 
             fig = px.box(df, **input_parametes)
@@ -936,7 +948,7 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
                 input_parametes = {"x": strNoneConvert(input1),
                                    "color": strNoneConvert(input2),
                                    "template": plot_theme,
-                                   "color_continuous_scale": plotly_color_continuous_scale}
+                                   }
 
                 input_parametes.update(otherinputtodict(input3))
 
@@ -964,7 +976,7 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
                                "color": strNoneConvert(input3),
                                "line_group": strNoneConvert(input4),
                                "template": plot_theme,
-                               "color_continuous_scale": plotly_color_continuous_scale}
+                               }
             input_parametes.update(otherinputtodict(input5))
 
             fig = px.area(df, **input_parametes)
@@ -988,7 +1000,7 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
                                    "y": strNoneConvert(input2),
                                    "z": strNoneConvert(input3),
                                    "template": plot_theme,
-                                   "color_continuous_scale": plotly_color_continuous_scale}
+                                   }
                 input_parametes.update(otherinputtodict(input4))
 
                 fig = px.density_heatmap(df, **input_parametes)
@@ -1013,7 +1025,7 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
                                    "y": strNoneConvert(input1),
                                    "color": strNoneConvert(input3),
                                    "template": plot_theme,
-                                   "color_continuous_scale": plotly_color_continuous_scale}
+                                   }
                 input_parametes.update(otherinputtodict(input4))
 
                 fig = px.violin(df, **input_parametes)
@@ -1040,7 +1052,7 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
                                "size": strNoneConvert(input4),
                                "trendline": strNoneConvert(input5),
                                "template": plot_theme,
-                               "color_continuous_scale": plotly_color_continuous_scale}
+                               }
             input_parametes.update(otherinputtodict(input6))
 
             fig = px.scatter(df, **input_parametes)
@@ -1062,7 +1074,7 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
             input_parametes = {"locations": strNoneConvert(input1),
                                "color": strNoneConvert(input2),
                                "template": plot_theme,
-                               "color_continuous_scale": plotly_color_continuous_scale}
+                               }
             input_parametes.update(otherinputtodict(input3))
 
             fig = px.line_geo(df, **input_parametes)
@@ -1099,7 +1111,7 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
                                "zoom": 0,
                                "mapbox_style": "stamen-terrain",
                                "template": plot_theme,
-                               "color_continuous_scale": plotly_color_continuous_scale}
+                               }
             input_parametes.update(otherinputtodict(input5))
 
             fig = px.density_mapbox(df, **input_parametes)
@@ -1176,7 +1188,7 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
                                "color": strNoneConvert(input4),
                                "size": strNoneConvert(input5),
                                "template": plot_theme,
-                               "color_continuous_scale": plotly_color_continuous_scale}
+                               }
             input_parametes.update(otherinputtodict(input6))
 
             fig = px.scatter_ternary(df, **input_parametes)
@@ -1203,7 +1215,7 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
                                "size": strNoneConvert(input4),
                                "symbol": strNoneConvert(input5),
                                "template": plot_theme,
-                               "color_continuous_scale": plotly_color_continuous_scale}
+                               }
             input_parametes.update(otherinputtodict(input6))
 
             fig = px.scatter_polar(df, **input_parametes)
@@ -1233,7 +1245,7 @@ def dashboard_layout(dash_app,df=pd.DataFrame(), dropdowns=[]):
                                "v": df[input5],
                                "w": df[input6],
                                "template": plot_theme,
-                               "color_continuous_scale": plotly_color_continuous_scale}
+                               }
             input_parametes.update(otherinputtodict(input7))
 
             fig = go.Figure(data=go.Streamtube(**input_parametes))
