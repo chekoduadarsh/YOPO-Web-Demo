@@ -8,7 +8,8 @@ def create_dataframe(message):
     df = pd.DataFrame()
     if message != "":
         df = pd.read_csv(message)
-        df = df.sample(n = 50, random_state = 2) # reducing Data Load Running on Heroku Free !!!!
+        if (len(df) > 50):
+            df = df.sample(n = 50, random_state = 2) # reducing Data Load Running on Heroku Free !!!!
         if len(df) == 0:
             return pd.DataFrame()
         df.insert(0,"Index", df.index)
