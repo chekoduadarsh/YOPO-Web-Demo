@@ -37,6 +37,6 @@ statsmodels==0.13.1
 tenacity
 tornado 
 visitor==0.1.3
-Werkzeug 
+Werkzeug==2.0.0
 WTForms==3.0.0
 gunicorn
